@@ -1,4 +1,4 @@
-import { WebContainer, WebContainerInternal } from '@webcontainer/api';
+import { WebContainer } from '@webcontainer/api';
 import { WORK_DIR_NAME } from '@/utils/constants';
 import { workbenchStore } from '../stores/workbench';
 import { cleanStackTrace } from '@/utils/stacktrace';
@@ -7,7 +7,7 @@ interface WebContainerContext {
   loaded: boolean;
 }
 
-let webcontainerContext: WebContainerContext = {
+const webcontainerContext: WebContainerContext = {
   loaded: false,
 };
 

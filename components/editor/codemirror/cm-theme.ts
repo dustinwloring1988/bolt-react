@@ -1,7 +1,7 @@
 import { Compartment, type Extension } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { coolGlow } from 'thememirror';
-import { vscodeDark, vscodeLight } from '@uiw/codemirror-theme-vscode';
+import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import type { Theme } from '@/types/theme.js';
 import type { EditorSettings } from './CodeMirrorEditor.js';
 

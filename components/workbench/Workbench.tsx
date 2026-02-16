@@ -6,8 +6,6 @@ import {
   type OnChangeCallback as OnEditorChange,
   type OnScrollCallback as OnEditorScroll,
 } from '@/components/editor/codemirror/CodeMirrorEditor';
-import { IconButton } from '@/components/ui/IconButton';
-import { PanelHeaderButton } from '@/components/ui/PanelHeaderButton';
 import { Slider, type SliderOptions } from '@/components/ui/OldSlider';
 import { workbenchStore, type WorkbenchViewType } from '@/lib/stores/workbench';
 import { cn } from '@/lib/utils';
@@ -15,11 +13,9 @@ import { cubicEasingFn } from '@/utils/easings';
 import { renderLogger } from '@/utils/logger';
 import { EditorPanel } from './EditorPanel';
 import { Preview } from './Preview';
-import { chatId } from '@/persistance/useChatHistory';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { chatStore } from '@/lib/stores/chat';
 import { Drawer, DrawerContent } from '@/components/ui/drawer';
-import { useSidebar } from '../ui/sidebar';
 import { XCircle } from '@phosphor-icons/react';
 import { toast } from '@/hooks/use-toast';
 
@@ -88,9 +84,6 @@ export const Workbench = memo(({ chatStarted, isStreaming, className }: Workspac
   const files = useStore(workbenchStore.files);
   const selectedView = useStore(workbenchStore.currentView);
   const { showChat } = useStore(chatStore);
-  const {
-    state,
-  } = useSidebar()
 
   const canHideChat = showWorkbench || !showChat
 
@@ -240,6 +233,8 @@ export const Workbench = memo(({ chatStarted, isStreaming, className }: Workspac
   return workbenchInstance;
 });
 
+Workbench.displayName = 'Workbench';
+
 interface ViewProps extends HTMLMotionProps<'div'> {
   children: React.ReactElement;
 }
@@ -251,3 +246,5 @@ const View = memo(({ children, ...props }: ViewProps) => {
     </motion.div>
   );
 });
+
+View.displayName = 'View';

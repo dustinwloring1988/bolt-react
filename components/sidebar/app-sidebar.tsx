@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import {
   BookOpen,
   BotMessageSquare,
@@ -67,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             window.location.pathname = '/';
           }
         })
-        .catch((error) => {
+        .catch(() => {
           toast.error('Failed to delete conversation');
         });
     }
@@ -79,6 +80,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     }
   }, [open]);
 
+   
   useEffect(() => {
     if (!showChat) {
       setOpen(false);
@@ -184,24 +186,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navSecondary: [
       {
         title: "Github",
-        url: "https://github.com/xKevIsDev/",
+        url: "https://github.com/Dustinwloring1988/bolt-react",
         target: "_blank",
         icon: GithubLogo,
       },
       {
         title: "Sponsor",
-        url: "https://github.com/sponsors/xKevIsDev/",
+        url: "https://github.com/sponsors/Dustinwloring1988",
         target: "_blank",
         icon: Heart,
       },
       {
         title: "Support",
-        url: "#",
+        url: "https://github.com/Dustinwloring1988/bolt-react/issues",
+        target: "_blank",
         icon: LifeBuoy,
       },
       {
         title: "Feedback",
-        url: "#",
+        url: "https://github.com/Dustinwloring1988/bolt-react/issues",
+        target: "_blank",
         icon: Send,
       },
     ],
@@ -213,13 +217,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/" className="flex items-center gap-2 group">
+              <Link href="/" className="flex items-center gap-2 group">
                 <h1 className="font-display text-3xl font-semibold tracking-tight">
                   <span className="text-sidebar-foreground group-hover:text-sidebar-primary transition-colors duration-300">Bolt</span>
                   <span className="sidebar-logo-dot" />
-                  <span className="text-sidebar-foreground/70">Next</span>
+                  <span className="text-sidebar-foreground/70">Local</span>
                 </h1>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -1,5 +1,4 @@
 import { memo, useEffect, useRef } from 'react';
-import { IconButton } from '@/components/ui/IconButton';
 import type { PreviewInfo } from '@/lib/stores/previews';
 import { Plug } from '@phosphor-icons/react';
 
@@ -82,3 +81,5 @@ export const PortDropdown = memo(
     );
   },
 );
+
+PortDropdown.displayName = 'PortDropdown';

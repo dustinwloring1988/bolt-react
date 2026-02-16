@@ -1,9 +1,50 @@
 import { useState, useCallback, useRef } from 'react';
 
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionResultList {
+  length: number;
+  item(index: number): SpeechRecognitionResult;
+  [index: number]: SpeechRecognitionResult;
+}
+
+interface SpeechRecognitionResult {
+  length: number;
+  item(index: number): SpeechRecognitionAlternative;
+  [index: number]: SpeechRecognitionAlternative;
+}
+
+interface SpeechRecognitionAlternative {
+  transcript: string;
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string;
+}
+
+declare global {
+  interface Window {
+    webkitSpeechRecognition: new () => SpeechRecognition;
+  }
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  onstart: () => void;
+  onerror: (event: SpeechRecognitionErrorEvent) => void;
+  onresult: (event: SpeechRecognitionEvent) => void;
+  onend: () => void;
+  start: () => void;
+  stop: () => void;
+}
+
 export function useSpeechRecognition() {
   const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   const stopListening = useCallback(() => {
     if (recognitionRef.current) {
@@ -18,7 +59,7 @@ export function useSpeechRecognition() {
       return;
     }
 
-    const recognition = new (window as any).webkitSpeechRecognition();
+    const recognition = new window.webkitSpeechRecognition();
     recognitionRef.current = recognition;
     recognition.continuous = true;
     recognition.interimResults = true;
@@ -28,14 +69,14 @@ export function useSpeechRecognition() {
       setError(null);
     };
 
-    recognition.onerror = (event: any) => {
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       setError(event.error);
       setIsListening(false);
     };
 
-    recognition.onresult = (event: any) => {
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = Array.from(event.results)
-        .map((result: any) => result[0].transcript)
+        .map((result: SpeechRecognitionResult) => result[0].transcript)
         .join('');
       
       onResult(transcript);

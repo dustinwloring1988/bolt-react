@@ -1,6 +1,5 @@
 "use client"
-import type { UIMessage } from 'ai';
-import React, { type RefCallback, useEffect, useRef, useState } from 'react';
+import React, { type RefCallback, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Messages } from './Messages';
 import { ChatInput } from './ChatInput';
@@ -9,6 +8,7 @@ import { ChatExamples } from './ChatExamples';
 import { Workbench } from '@/components/workbench/Workbench';
 import ChatAlert from './ChatAlert';
 import { ActionAlert } from '@/types/actions';
+import type { UIMessage } from 'ai';
 
 interface BaseChatProps {
   textareaRef?: React.RefObject<HTMLTextAreaElement | null> | undefined;
@@ -17,7 +17,7 @@ interface BaseChatProps {
   showChat?: boolean;
   chatStarted?: boolean;
   isStreaming?: boolean;
-  messages?: any;
+  messages?: UIMessage[];
   enhancingPrompt?: boolean;
   promptEnhanced?: boolean;
   input?: string;
@@ -104,7 +104,8 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                           alert={actionAlert}
                           clearAlert={() => clearAlert?.()}
                           postMessage={(message) => {
-                            sendMessage?.({} as any, message);
+                            const mockEvent = { } as React.UIEvent;
+                            sendMessage?.(mockEvent, message);
                             clearAlert?.();
                           }}
                         />

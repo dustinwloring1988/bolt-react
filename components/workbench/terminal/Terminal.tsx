@@ -81,6 +81,7 @@ export const Terminal = memo(
     }, [term]);
 
 
+     
     useEffect(() => {
       if (term) {
         term.options.theme = getTerminalTheme(readonly ? { cursor: '#00000000' } : {});

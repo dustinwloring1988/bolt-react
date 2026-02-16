@@ -32,7 +32,7 @@ export class EditorStore {
 
   private setupHotReload() {
     if (typeof window !== 'undefined') {
-      (window as any).__EDITOR_STATE__ = {
+      (window as unknown as Record<string, unknown>).__EDITOR_STATE__ = {
         documents: this.documents,
         selectedFile: this.selectedFile,
       };

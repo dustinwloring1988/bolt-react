@@ -218,7 +218,7 @@ function isBinaryFile(buffer: Uint8Array | undefined) {
     return false;
   }
 
-  //@ts-ignore
+  // @ts-expect-error - getEncoding types are incorrect
   return getEncoding(convertToBuffer(buffer), { chunkLength: 100 }) === 'binary';
 }
 

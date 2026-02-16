@@ -17,7 +17,7 @@ export type StreamingOptions = Omit<Parameters<typeof _streamText>[0], 'model' |
 
 
 export async function streamText({ messages, provider, ...options }: { messages: UIMessage[], provider: Provider } & StreamingOptions) {
-  let model: any;
+  let model: ReturnType<typeof anthropic> | ReturnType<typeof google> | ReturnType<typeof ollama>;
 
   switch (provider.type) {
     case ProviderType.ANTHROPIC:

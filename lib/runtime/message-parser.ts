@@ -1,4 +1,4 @@
-import type { ActionType, BoltNextAction, BoltNextActionData, FileAction, ShellAction, } from '@/types/actions';
+import type { ActionType, BoltNextAction, BoltNextActionData, FileAction } from '@/types/actions';
 import type { BoltNextArtifactData } from '@/types/artifact';
 import { createScopedLogger } from '@/utils/logger';
 import { unreachable } from '@/utils/unreachable';

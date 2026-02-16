@@ -49,6 +49,7 @@ export const FileTree = memo(
         : new Set<string>();
     });
 
+     
     useEffect(() => {
       if (collapsed) {
         setCollapsedFolders(new Set(fileList.filter((item) => item.kind === 'folder').map((item) => item.fullPath)));
@@ -150,6 +151,8 @@ export const FileTree = memo(
     );
   },
 );
+
+FileTree.displayName = 'FileTree';
 
 export default FileTree;
 

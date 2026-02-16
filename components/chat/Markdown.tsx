@@ -73,3 +73,5 @@ export const Markdown = memo(({ children, html = false, limitedMarkdown = false 
     </ReactMarkdown>
   );
 });
+
+Markdown.displayName = 'Markdown';

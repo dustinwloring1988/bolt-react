@@ -21,10 +21,8 @@ A Next.js 15 AI Chat Application powered by Vercel AI SDK with multi-provider su
 
 | Provider | Models |
 |----------|--------|
-| Google | gemini-2.0-flash-exp, gemini-2.0-flash-thinking-exp-1219, gemini-2.5-flash-preview-04-17 |
-| Anthropic | claude-3-opus, claude-3.5-sonnet, claude-3.5-haiku |
-| TogetherAI | Llama-3.2-90B-Vision, Llama-3.3-70B, Qwen2.5-Coder-32B |
-| xAI | grok-2-latest |
+| Google | gemini-3-pro, gemini-3-flash |
+| Anthropic | claude-opus-4-6, claude-sonnet-4-5, claude-haiku-4-5 |
 | Ollama | gpt-oss, qwen3-coder, granite3.2-vision, qwen3-vl |
 
 ## Getting Started

@@ -4,9 +4,6 @@ import type { ActionAlert, BoltNextAction } from '@/types/actions';
 import { createScopedLogger } from '@/utils/logger';
 import { unreachable } from '@/utils/unreachable';
 import type { ActionCallbackData } from './message-parser';
-import stripAnsi from 'strip-ansi';
-import { workbenchStore } from '../stores/workbench';
-import type { TerminalStore } from '../stores/terminal';
 import type { BoltNextShell } from '@/utils/shell';
 import path from 'path';
 
@@ -315,7 +312,7 @@ const resp = await shell.executeCommand(this.runnerId.get(), action.content, () 
       process.kill();
     });
 
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>((_resolve, _reject) => {
       process.output.pipeTo(
         new WritableStream({
           write: (data) => {

@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { type ChatHistoryItem } from '@/persistance';
 import { Trash } from '@phosphor-icons/react';
 
@@ -9,22 +9,18 @@ interface HistoryItemProps {
 }
 
 export function HistoryItem({ item, onDelete }: HistoryItemProps) {
-  const [hovering, setHovering] = useState(false);
   const hoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
 
     function mouseEnter() {
-      setHovering(true);
-
       if (timeout) {
         clearTimeout(timeout);
       }
     }
 
     function mouseLeave() {
-      setHovering(false);
     }
 
     hoverRef.current?.addEventListener('mouseenter', mouseEnter);

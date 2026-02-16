@@ -18,3 +18,5 @@ export const PanelHeader = memo(({ className, children }: PanelHeaderProps) => {
     </div>
   );
 });
+
+PanelHeader.displayName = 'PanelHeader';

@@ -149,3 +149,5 @@ export const FileBreadcrumb = memo<FileBreadcrumbProps>(({ files, pathSegments =
     </div>
   );
 });
+
+FileBreadcrumb.displayName = 'FileBreadcrumb';

@@ -34,6 +34,7 @@ export const Artifact = memo(({ messageId }: ArtifactProps) => {
     setShowActions(!showActions);
   };
 
+   
   useEffect(() => {
     if (actions.length && !showActions && !userToggledActions.current) {
       setShowActions(true);
@@ -94,10 +95,7 @@ export const Artifact = memo(({ messageId }: ArtifactProps) => {
   );
 });
 
-interface ShellCodeBlockProps {
-  classsName?: string;
-  code: string;
-}
+Artifact.displayName = 'Artifact';
 
 interface ActionListProps {
   actions: ActionState[];
@@ -177,6 +175,8 @@ const ActionList = memo(({ actions }: ActionListProps) => {
     </motion.div>
   );
 });
+
+ActionList.displayName = 'ActionList';
 
 function getIconColor(status: ActionState['status']) {
   switch (status) {

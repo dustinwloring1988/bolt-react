@@ -8,11 +8,6 @@ interface ShellCodeBlockProps {
   code: string;
 }
 
-const highlighterOptions = {
-  langs: ['shell'],
-  themes: ['light-plus', 'dark-plus'],
-};
-
 export const ShellCodeBlock = memo(({ classsName, code }: ShellCodeBlockProps) => {
   const [highlightedCode, setHighlightedCode] = useState<string | undefined>(undefined);
 
@@ -35,3 +30,5 @@ export const ShellCodeBlock = memo(({ classsName, code }: ShellCodeBlockProps) =
     />
   );
 });
+
+ShellCodeBlock.displayName = 'ShellCodeBlock';

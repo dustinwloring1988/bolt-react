@@ -28,15 +28,6 @@ export function ProviderSelector() {
     setProvider(value);
   };
 
-  const getProviderLabel = (type: ProviderType) => {
-    switch (type) {
-      case ProviderType.ANTHROPIC: return 'Anthropic';
-      case ProviderType.GOOGLE: return 'Google';
-      case ProviderType.OLLAMA: return 'Ollama';
-      default: return type;
-    }
-  };
-
   return (
     <DropdownMenu onOpenChange={(open) => setIsProviderMenuOpen(open)}>
       <DropdownMenuTrigger asChild>

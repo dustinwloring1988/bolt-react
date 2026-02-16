@@ -3,18 +3,22 @@ import { Markdown } from './Markdown';
 
 interface UserMessageProps {
   content: string;
-  data: any;
+  data?: {
+    url?: string;
+    size?: number;
+    name?: string;
+  } | string | null;
 }
 
 export function UserMessage({ content, data }: UserMessageProps) {
-  let imageUrl = null;
-  let imageSize = null;
-  let imageName = null;
+  let imageUrl: string | null = null;
+  let imageSize: number | null = null;
+  let imageName: string | null = null;
 
-  if (data?.url) {
-    imageUrl = data.url;
-    imageSize = data.size;
-    imageName = data.name;
+  if (data && typeof data === 'object' && 'url' in data) {
+    imageUrl = data.url ?? null;
+    imageSize = data.size ?? null;
+    imageName = data.name ?? null;
   } else if (typeof data === 'string' && data.startsWith('data:image')) {
       imageUrl = data;
       imageSize = data.length;
@@ -48,7 +52,7 @@ export function UserMessage({ content, data }: UserMessageProps) {
           </div>
           <div className='flex flex-col gap-1 items-start justify-center'>
             <span className="text-xs text-accent truncate">{imageName}</span>
-            <span className="text-xs text-muted truncate">{formatBytes(imageSize)}</span>
+            <span className="text-xs text-muted truncate">{imageSize !== null ? formatBytes(imageSize) : ''}</span>
           </div>
         </div>
       )}

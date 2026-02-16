@@ -35,9 +35,14 @@ export class WorkbenchStore {
   private filesStore = new FilesStore(webcontainer);
   private editorStore = new EditorStore(this.filesStore);
   private terminalStore = new TerminalStore(webcontainer);
-  actionAlert: WritableAtom<ActionAlert | undefined> = atom<ActionAlert | undefined>(
-    (typeof window !== 'undefined' && (window as any).__NEXT_HMR_DATA__?.actionAlert) ?? undefined
-  );
+
+  private getInitialActionAlert(): ActionAlert | undefined {
+    if (typeof window === 'undefined') return undefined;
+    const data = (window as unknown as { __NEXT_HMR_DATA__?: { actionAlert?: ActionAlert } }).__NEXT_HMR_DATA__;
+    return data?.actionAlert;
+  }
+
+  actionAlert: WritableAtom<ActionAlert | undefined> = atom<ActionAlert | undefined>(this.getInitialActionAlert());
   webcontainer: Promise<WebContainer>;
   reloadedMessages = new Set<string>();
 
@@ -59,7 +64,7 @@ export class WorkbenchStore {
   private setupHotReload() {
     if (typeof window !== 'undefined') {
       // Store state in window for hot reloading
-      (window as any).__WORKBENCH_STATE__ = {
+      (window as unknown as { __WORKBENCH_STATE__?: Record<string, unknown> }).__WORKBENCH_STATE__ = {
         artifacts: this.artifacts,
         unsavedFiles: this.unsavedFiles,
         showWorkbench: this.showWorkbench,

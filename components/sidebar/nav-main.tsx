@@ -43,17 +43,23 @@ export function NavMain({
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton 
-                  asChild 
                   className="sidebar-nav-item"
                   data-active={item.isActive}
                 >
-                  <a href={item.url} className="flex items-center gap-3">
+                  <button 
+                    className="flex items-center gap-3 w-full"
+                    onClick={(e) => {
+                      if (!item.items?.length && item.url) {
+                        window.location.href = item.url;
+                      }
+                    }}
+                  >
                     <item.icon className="sidebar-icon" />
                     <span className="font-body text-sm">{item.title}</span>
                     {item.items?.length ? (
                       <ChevronRight className="sidebar-collapse-indicator ml-auto" />
                     ) : null}
-                  </a>
+                  </button>
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               {item.items?.length ? (

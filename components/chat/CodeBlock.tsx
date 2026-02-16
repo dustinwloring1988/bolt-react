@@ -86,3 +86,5 @@ export const CodeBlock = memo(
     );
   },
 );
+
+CodeBlock.displayName = 'CodeBlock';

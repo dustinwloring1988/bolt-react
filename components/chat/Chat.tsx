@@ -2,15 +2,13 @@ import { useStore } from '@nanostores/react';
 import type { UIMessage } from 'ai';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
-import { useAnimate } from 'framer-motion';
 import { memo, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
-import { cssTransition, toast, ToastContainer } from 'react-toastify';
+import { cssTransition, ToastContainer } from 'react-toastify';
 import { useMessageParser, usePromptEnhancer, useShortcuts, useSnapScroll } from '@/hooks';
 import { useChatHistory } from '@/persistance';
 import { chatStore } from '@/lib/stores/chat';
 import { workbenchStore } from '@/lib/stores/workbench';
 import { fileModificationsToHTML } from '@/utils/diff';
-import { cubicEasingFn } from '@/utils/easings';
 import { providerStore } from '@/lib/stores/provider';
 import { createScopedLogger, renderLogger } from '@/utils/logger';
 import { BaseChat } from '@/components/chat/BaseChat';
@@ -76,12 +74,9 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
   useShortcuts();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const baseChatRef = useRef<HTMLDivElement>(null);
   const actionAlert = useStore(workbenchStore.alert);
   const [chatStarted, setChatStarted] = useState(initialMessages.length > 0);
   const { showChat } = useStore(chatStore);
-  const [animationScope, animate] = useAnimate();
-  const provider = useStore(providerStore);
   const { toast } = useToast();
 
   const [input, setInput] = useState('');
@@ -117,7 +112,7 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
 
   const isLoading = status === 'streaming' || status === 'submitted';
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   };
 
@@ -126,10 +121,12 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
 
   const TEXTAREA_MAX_HEIGHT = chatStarted ? 400 : 200;
 
+   
+   
   const debouncedParseMessages = useCallback(
     debounce((messages, isLoading) => {
       parseMessages(messages, isLoading);
-    }, 300), // Adjust the delay as needed
+    }, 300),
     []
   );
 
@@ -166,6 +163,7 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
     workbenchStore.abortAllActions();
   };
 
+   
   const debouncedSetTextareaHeight = useCallback(
     debounce(() => {
       const textarea = textareaRef.current;
@@ -191,10 +189,10 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
       return;
     }
 
-    const introElement = document.querySelector('#intro');
-    const examplesElement = document.querySelector('#examples');
+    // TODO: fix or remove this
+    const _introElement = document.querySelector('#intro');
+    const _examplesElement = document.querySelector('#examples');
 
-    //TODO: fix or remove this
     {/*if (!introElement || !examplesElement) {
       return;
     }*/}
@@ -207,7 +205,7 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
   const sendMessage = async (
     _event: React.UIEvent,
     messageInput?: string,
-    imagePreview?: { imageUrl?: string | null; imageName?: string | null; imageSize?: number | null } | null | undefined
+    _imagePreview?: { imageUrl?: string | null; imageName?: string | null; imageSize?: number | null } | null | undefined
   ) => {
     const _input = messageInput || input;
 
@@ -318,3 +316,5 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
     />
   );
 });
+
+ChatImpl.displayName = 'ChatImpl';

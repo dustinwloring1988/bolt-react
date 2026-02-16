@@ -27,8 +27,9 @@ export class TerminalStore {
     try {
       const wc = await this.#webcontainer;
       await this.#boltnextTerminal.init(wc, terminal);
-    } catch (error: any) {
-      terminal.write(coloredText.red('Failed to spawn boltnext shell\n\n') + error.message);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      terminal.write(coloredText.red('Failed to spawn boltnext shell\n\n') + message);
       return;
     }
   }
@@ -37,8 +38,9 @@ export class TerminalStore {
     try {
       const shellProcess = await newShellProcess(await this.#webcontainer, terminal);
       this.#terminals.push({ terminal, process: shellProcess });
-    } catch (error: any) {
-      terminal.write(coloredText.red('Failed to spawn shell\n\n') + error.message);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      terminal.write(coloredText.red('Failed to spawn shell\n\n') + message);
       return;
     }
   }

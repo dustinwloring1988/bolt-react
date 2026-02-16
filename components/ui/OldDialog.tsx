@@ -3,7 +3,6 @@ import { motion, type Variants } from 'framer-motion';
 import React, { memo, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { cubicEasingFn } from '@/utils/easings';
-import { IconButton } from './IconButton';
 import { X } from '@phosphor-icons/react';
 
 export { Close as DialogClose, Root as DialogRoot } from '@radix-ui/react-dialog';
@@ -68,6 +67,8 @@ export const DialogButton = memo(({ type, children, onClick }: DialogButtonProps
   );
 });
 
+DialogButton.displayName = 'DialogButton';
+
 export const DialogTitle = memo(({ className, children, ...props }: RadixDialog.DialogTitleProps) => {
   return (
     <RadixDialog.Title
@@ -82,6 +83,8 @@ export const DialogTitle = memo(({ className, children, ...props }: RadixDialog.
   );
 });
 
+DialogTitle.displayName = 'DialogTitle';
+
 export const DialogDescription = memo(({ className, children, ...props }: RadixDialog.DialogDescriptionProps) => {
   return (
     <RadixDialog.Description
@@ -92,6 +95,8 @@ export const DialogDescription = memo(({ className, children, ...props }: RadixD
     </RadixDialog.Description>
   );
 });
+
+DialogDescription.displayName = 'DialogDescription';
 
 interface DialogProps {
   children: ReactNode | ReactNode[];
@@ -132,3 +137,5 @@ export const Dialog = memo(({ className, children, onBackdrop, onClose }: Dialog
     </RadixDialog.Portal>
   );
 });
+
+Dialog.displayName = 'Dialog';

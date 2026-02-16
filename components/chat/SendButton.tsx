@@ -1,4 +1,4 @@
-import { PaperPlaneRight, CircleNotch, Stop } from '@phosphor-icons/react';
+import { PaperPlaneRight, Stop } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface SendButtonProps {

@@ -34,3 +34,5 @@ export const PanelHeaderButton = memo(
     );
   },
 );
+
+PanelHeaderButton.displayName = 'PanelHeaderButton';

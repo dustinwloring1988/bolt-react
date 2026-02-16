@@ -11,7 +11,7 @@ interface Logger {
 }
 
 // Use process.env instead of import.meta.env
-let currentLevel: DebugLevel = process.env.NEXT_PUBLIC_LOG_LEVEL as DebugLevel
+const currentLevel: DebugLevel = process.env.NEXT_PUBLIC_LOG_LEVEL as DebugLevel
 
 const isWorker = typeof window !== 'undefined' && 'HTMLRewriter' in window;
 const supportsColor = !isWorker;

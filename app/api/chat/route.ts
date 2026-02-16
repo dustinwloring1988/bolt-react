@@ -4,6 +4,7 @@ import { CONTINUE_PROMPT } from '@/lib/llm/prompts';
 import { streamText, type StreamingOptions } from '@/lib/llm/stream-text';
 import SwitchableStream from '@/lib/llm/switchable-stream';
 import { type Provider } from '@/lib/stores/provider';
+import { type UIMessage } from 'ai';
 
 export const runtime = "edge";
 
@@ -12,7 +13,9 @@ export async function POST(request: NextRequest) {
 }
 
 async function chatAction(request: NextRequest) {
-  const { messages, provider } = await request.json() as { messages: any, provider: Provider };
+  const json = await request.json();
+  const messages = json.messages as UIMessage[];
+  const provider = json.provider as Provider;
 
   const stream = new SwitchableStream();
   const startTime = Date.now();
@@ -33,7 +36,9 @@ async function chatAction(request: NextRequest) {
 
         console.log(`Reached max token limit (${MAX_TOKENS}): Continuing message (${switchesLeft} switches left)`);
 
+        // @ts-expect-error AI SDK v6 message format
         messages.push({ role: 'assistant', content });
+        // @ts-expect-error AI SDK v6 message format
         messages.push({ role: 'user', content: CONTINUE_PROMPT });
 
         const result = await streamText({ messages, provider, ...options });
@@ -64,7 +69,7 @@ async function chatAction(request: NextRequest) {
         'Content-Type': 'text/plain; charset=utf-8',
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
 
     return new NextResponse(null, {

@@ -12,3 +12,5 @@ export const AssistantMessage = memo(({ content }: AssistantMessageProps) => {
     </div>
   );
 });
+
+AssistantMessage.displayName = 'AssistantMessage';

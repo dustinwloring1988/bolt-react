@@ -289,3 +289,5 @@ export const EditorPanel = memo(
     );
   },
 );
+
+EditorPanel.displayName = 'EditorPanel';

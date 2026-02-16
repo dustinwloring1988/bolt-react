@@ -1,6 +1,5 @@
 import { useStore } from '@nanostores/react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { IconButton } from '@/components/ui/IconButton';
 import { workbenchStore } from '@/lib/stores/workbench';
 import { PortDropdown } from './PortDropdown';
 import { ArrowClockwise } from '@phosphor-icons/react';
@@ -17,6 +16,7 @@ export const Preview = memo(() => {
   const [url, setUrl] = useState('');
   const [iframeUrl, setIframeUrl] = useState<string | undefined>();
 
+   
   useEffect(() => {
     if (!activePreview) {
       setUrl('');
@@ -58,6 +58,7 @@ export const Preview = memo(() => {
   );
 
   // when previews change, display the lowest port if user hasn't selected a preview
+   
   useEffect(() => {
     if (previews.length > 1 && !hasSelectedPreview.current) {
       const minPortIndex = previews.reduce(findMinPortIndex, 0);
@@ -68,7 +69,9 @@ export const Preview = memo(() => {
 
   const reloadPreview = () => {
     if (iframeRef.current) {
-      iframeRef.current.src = iframeRef.current.src;
+      const currentSrc = iframeRef.current.src;
+      iframeRef.current.src = '';
+      iframeRef.current.src = currentSrc;
     }
   };
 
@@ -123,3 +126,5 @@ export const Preview = memo(() => {
     </div>
   );
 });
+
+Preview.displayName = 'Preview';

@@ -4,7 +4,6 @@ import * as React from "react"
 import Link from "next/link"
 import {
   BookOpen,
-  BotMessageSquare,
   History,
   LifeBuoy,
   Send,
@@ -32,7 +31,9 @@ import { Heart } from "@phosphor-icons/react"
 import { HistoryItem } from "./HistoryItem"
 import { DialogRoot, DialogButton, Dialog, DialogTitle, DialogDescription } from "../ui/OldDialog"
 import { binDates } from "./date-binning"
+import { openSettingsModal } from "@/lib/stores/settings-modal"
 import { GithubLogo } from "@phosphor-icons/react/dist/ssr"
+import { SettingsModal } from "@/components/settings/SettingsModal"
 
 type DialogContent = { type: 'delete'; item: ChatHistoryItem } | null;
 
@@ -95,22 +96,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     navMain: [
       {
-        title: "Chat",
-        url: "/",
-        icon: BotMessageSquare,
-        isActive: true,
-        items: [
-          {
-            title: "Starred",
-            url: "#",
-          },
-          {
-            title: "Settings",
-            url: "#",
-          },
-        ],
-      },
-      {
         title: "History",
         icon: History,
         items:  [
@@ -165,10 +150,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "#",
         icon: BookOpen,
         items: [
-          { title: "Introduction", url: "#" },
-          { title: "Get Started", url: "#" },
-          { title: "Tutorials", url: "#" },
-          { title: "Changelog", url: "#" },
+          { title: "Introduction", url: "https://github.com/Dustinwloring1988/bolt-react#readme" },
+          { title: "Get Started", url: "https://github.com/Dustinwloring1988/bolt-react#getting-started" },
+          { title: "Tutorials", url: "https://github.com/Dustinwloring1988/bolt-react#tutorials" },
+          { title: "Changelog", url: "https://github.com/Dustinwloring1988/bolt-react/releases" },
         ],
       },
       {
@@ -176,10 +161,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "#",
         icon: Settings2,
         items: [
-          { title: "General", url: "#" },
-          { title: "Team", url: "#" },
-          { title: "Billing", url: "#" },
-          { title: "Limits", url: "#" },
+          <button
+            key="settings-general"
+            className="sidebar-model-item w-full text-left"
+            onClick={() => openSettingsModal('general')}
+          >
+            General
+          </button>,
+          <button
+            key="settings-team"
+            className="sidebar-model-item w-full text-left"
+            onClick={() => openSettingsModal('team')}
+          >
+            Team
+          </button>,
+          <button
+            key="settings-billing"
+            className="sidebar-model-item w-full text-left"
+            onClick={() => openSettingsModal('billing')}
+          >
+            Billing
+          </button>,
+          <button
+            key="settings-limits"
+            className="sidebar-model-item w-full text-left"
+            onClick={() => openSettingsModal('limits')}
+          >
+            Limits
+          </button>,
         ],
       },
     ],
@@ -213,6 +222,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar variant="inset" {...props}>
+      <SettingsModal />
       <SidebarHeader className="border-b border-sidebar-border/50 pb-6 pt-6">
         <SidebarMenu>
           <SidebarMenuItem>

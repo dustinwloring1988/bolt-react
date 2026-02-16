@@ -9,9 +9,7 @@ import {
 } from "@/components/ui/collapsible"
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -38,26 +36,28 @@ export function NavMain({
   items,
 }: NavMainProps) {
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+    <SidebarGroup className="sidebar-group">
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <a href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </a>
-              </SidebarMenuButton>
+              <CollapsibleTrigger asChild>
+                <SidebarMenuButton 
+                  asChild 
+                  className="sidebar-nav-item"
+                  data-active={item.isActive}
+                >
+                  <a href={item.url} className="flex items-center gap-3">
+                    <item.icon className="sidebar-icon" />
+                    <span className="font-body text-sm">{item.title}</span>
+                    {item.items?.length ? (
+                      <ChevronRight className="sidebar-collapse-indicator ml-auto" />
+                    ) : null}
+                  </a>
+                </SidebarMenuButton>
+              </CollapsibleTrigger>
               {item.items?.length ? (
                 <>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuAction className="data-[state=open]:rotate-90">
-                      <ChevronRight />
-                      <span className="sr-only">Toggle</span>
-                    </SidebarMenuAction>
-                  </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub>
                       {item.items?.map((subItem, index) => (
@@ -67,11 +67,11 @@ export function NavMain({
                               subItem
                             ) : (
                               (subItem as NavItem)?.url ? (
-                                <a href={(subItem as NavItem).url}>
-                                  {(subItem as NavItem).title ? (typeof (subItem as NavItem).title === 'string' ? < span>{(subItem as NavItem).title}</span > : < >{(subItem as NavItem).title}</ >) : null}
+                                <a href={(subItem as NavItem).url} className="sidebar-model-item">
+                                  {(subItem as NavItem).title ? (typeof (subItem as NavItem).title === 'string' ? <span>{(subItem as NavItem).title}</span> : <>{ (subItem as NavItem).title}</>) : null}
                                 </a>
                               ) : (
-                                < >{(subItem as NavItem)?.title}</ >
+                                <div className="sidebar-model-item">{(subItem as NavItem)?.title}</div>
                               )
                             )}
                           </SidebarMenuSubButton>

@@ -22,14 +22,15 @@ export function NavSecondary({
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
     <SidebarGroup {...props}>
+      <div className="sidebar-divider" />
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild size="sm">
-                <a href={item.url} target={item.target}>
-                  <item.icon />
-                  <span>{item.title}</span>
+              <SidebarMenuButton asChild size="sm" className="sidebar-nav-item">
+                <a href={item.url} target={item.target} className="flex items-center gap-3">
+                  <item.icon className="sidebar-icon w-4 h-4" />
+                  <span className="font-body text-sm">{item.title}</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>

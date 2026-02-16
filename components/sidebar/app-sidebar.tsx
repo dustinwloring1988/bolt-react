@@ -114,12 +114,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "History",
         icon: History,
         items:  [
-          <div key="history-container" className="!bg-background !hover:bg-background !active:bg-background flex items-center h-full w-full justify-between max-w-full">
-            {list.length === 0 && <div className="text-muted-foreground text-sm">No previous conversations</div>}
+          <div key="history-container" className="!bg-transparent !hover:bg-transparent !active:bg-transparent flex items-center h-full w-full justify-between max-w-full py-2">
+            {list.length === 0 && <div className="text-sidebar-foreground/40 text-sm pl-3">No previous conversations</div>}
             <DialogRoot open={dialogContent !== null}>
                 {binDates(list).map(({ category, items }) => (
-                  <div key={category} className="text-foreground !hover:text-foreground mt-4 first:mt-0 space-y-1 truncate">
-                    <div className="sticky top-0 z-1 pl-2 pt-2 pb-1 text-xs text-muted-foreground/70 uppercase tracking-wider font-medium">
+                  <div key={category} className="text-sidebar-foreground !hover:text-sidebar-foreground mt-3 first:mt-0 space-y-1 truncate">
+                    <div className="sidebar-section-title pl-0">
                       {category}
                     </div>
                     {items.map((item) => (
@@ -164,35 +164,35 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "Models",
         icon: Bot,
         items: [
-          <div key="models-container" className="!bg-background !hover:bg-background active:bg-background flex flex-col !w-full h-full items-center justify-center py-2">
-            <div className="text-[10px] text-muted-foreground/60 uppercase tracking-wider text-start w-full pl-2 mb-1 font-medium">Anthropic</div>
+          <div key="models-container" className="!bg-transparent !hover:bg-transparent !active:bg-transparent flex flex-col !w-full h-full items-start py-2 pr-2">
+            <div className="sidebar-section-title">Anthropic</div>
             {anthropicModels.map((model) => (
               <div
                 key={model.id}
-                className="!w-full py-1.5 px-2 cursor-pointer text-start text-sm text-foreground/80 hover:text-primary hover:bg-secondary/40 rounded-md transition-colors"
+                className="sidebar-model-item !w-full"
                 onClick={() => setProvider({ type: ProviderType.ANTHROPIC, model })}
               >
-                {model.displayName}
+                <span className="truncate">{model.displayName}</span>
               </div>
             ))}
-            <div className="text-[10px] text-muted-foreground/60 uppercase tracking-wider text-start w-full pl-2 mt-3 mb-1 font-medium">Google</div>
+            <div className="sidebar-section-title mt-3">Google</div>
             {googleModels.map((model) => (
               <div
                 key={model.id}
-                className="!w-full py-1.5 px-2 cursor-pointer text-start text-sm text-foreground/80 hover:text-primary hover:bg-secondary/40 rounded-md transition-colors"
+                className="sidebar-model-item !w-full"
                 onClick={() => setProvider({ type: ProviderType.GOOGLE, model })}
               >
-                {model.displayName}
+                <span className="truncate">{model.displayName}</span>
               </div>
             ))}
-            <div className="text-[10px] text-muted-foreground/60 uppercase tracking-wider text-start w-full pl-2 mt-3 mb-1 font-medium">Ollama</div>
+            <div className="sidebar-section-title mt-3">Ollama</div>
             {ollamaModels.map((model) => (
               <div
                 key={model.id}
-                className="!w-full py-1.5 px-2 cursor-pointer text-start text-sm text-foreground/80 hover:text-primary hover:bg-secondary/40 rounded-md transition-colors"
+                className="sidebar-model-item !w-full"
                 onClick={() => setProvider({ type: ProviderType.OLLAMA, model })}
               >
-                {model.displayName}
+                <span className="truncate">{model.displayName}</span>
               </div>
             ))}
           </div>,
@@ -249,26 +249,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar variant="inset" {...props}>
-      <SidebarHeader className="border-b border-border/30 pb-4">
+      <SidebarHeader className="border-b border-sidebar-border/50 pb-6 pt-6">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/" className="flex items-center gap-2">
-                <h1 className="font-display text-2xl font-semibold tracking-tight">
-                  <span className="text-foreground">Bolt</span>
-                  <span className="text-primary">.</span>
-                  <span className="text-foreground/80">Next</span>
+              <a href="/" className="flex items-center gap-2 group">
+                <h1 className="font-display text-3xl font-semibold tracking-tight">
+                  <span className="text-sidebar-foreground group-hover:text-sidebar-primary transition-colors duration-300">Bolt</span>
+                  <span className="sidebar-logo-dot" />
+                  <span className="text-sidebar-foreground/70">Next</span>
                 </h1>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="px-3">
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavSecondary items={data.navSecondary} className="mt-auto pb-4" />
       </SidebarContent>
-      <SidebarFooter className="border-t border-border/30 pt-4">
+      <SidebarFooter className="border-t border-sidebar-border/50 pt-4 pb-4">
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>

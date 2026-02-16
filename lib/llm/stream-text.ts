@@ -30,7 +30,7 @@ export async function streamText({ messages, provider, ...options }: { messages:
       model = ollama(provider.model.id);
       break;
     default:
-      model = google("gemini-2.0-flash-thinking-exp-1219");
+      model = google("gemini-3-flash");
   }
 
   // Convert UIMessages to ModelMessages for AI SDK v6

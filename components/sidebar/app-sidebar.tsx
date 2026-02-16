@@ -3,7 +3,6 @@
 import * as React from "react"
 import {
   BookOpen,
-  Bot,
   BotMessageSquare,
   History,
   LifeBuoy,
@@ -32,7 +31,6 @@ import { Heart } from "@phosphor-icons/react"
 import { HistoryItem } from "./HistoryItem"
 import { DialogRoot, DialogButton, Dialog, DialogTitle, DialogDescription } from "../ui/OldDialog"
 import { binDates } from "./date-binning"
-import { anthropicModels, setProvider, ProviderType, googleModels, ollamaModels } from "@/lib/stores/provider"
 import { GithubLogo } from "@phosphor-icons/react/dist/ssr"
 
 type DialogContent = { type: 'delete'; item: ChatHistoryItem } | null;
@@ -88,10 +86,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [showChat])
 
   const data = {
-    user: {
-      name: "KevIsDev",
-      email: "madeby@kevisdev.tech",
-      avatar: "/replace-with-your-avatar.jpg",
+  user: {
+      name: "Guest User",
+      email: "guest@user.local",
+      avatar: "",
     },
     navMain: [
       {
@@ -159,45 +157,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </DialogRoot>
               </div>
         ],
-      },
-      {
-        title: "Models",
-        icon: Bot,
-        items: [
-          <div key="models-container" className="!bg-transparent !hover:bg-transparent !active:bg-transparent flex flex-col !w-full h-full items-start py-2 pr-2">
-            <div className="sidebar-section-title">Anthropic</div>
-            {anthropicModels.map((model) => (
-              <div
-                key={model.id}
-                className="sidebar-model-item !w-full"
-                onClick={() => setProvider({ type: ProviderType.ANTHROPIC, model })}
-              >
-                <span className="truncate">{model.displayName}</span>
-              </div>
-            ))}
-            <div className="sidebar-section-title mt-3">Google</div>
-            {googleModels.map((model) => (
-              <div
-                key={model.id}
-                className="sidebar-model-item !w-full"
-                onClick={() => setProvider({ type: ProviderType.GOOGLE, model })}
-              >
-                <span className="truncate">{model.displayName}</span>
-              </div>
-            ))}
-            <div className="sidebar-section-title mt-3">Ollama</div>
-            {ollamaModels.map((model) => (
-              <div
-                key={model.id}
-                className="sidebar-model-item !w-full"
-                onClick={() => setProvider({ type: ProviderType.OLLAMA, model })}
-              >
-                <span className="truncate">{model.displayName}</span>
-              </div>
-            ))}
-          </div>,
-        ],
-      },
+    },
       {
         title: "Documentation",
         url: "#",

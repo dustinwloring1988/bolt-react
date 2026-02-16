@@ -1,11 +1,11 @@
 import { atom } from 'nanostores';
 
 export type AnthropicModel = {
-  id: 'claude-3-opus-20240229' | 'claude-3-5-sonnet-20241022' | 'claude-3-5-haiku-20241022';
+  id: 'claude-opus-4-6-20250205' | 'claude-sonnet-4-5-20251120' | 'claude-haiku-4-5-20251120';
   displayName: string;
 };
 export type GoogleModel = {
-  id: 'gemini-2.0-flash-exp' | 'gemini-2.0-flash-thinking-exp-1219' | 'gemini-2.5-flash-preview-04-17';
+  id: 'gemini-3-pro' | 'gemini-3-flash';
   displayName: string;
 };
 
@@ -25,7 +25,7 @@ export type Provider =
   | { type: ProviderType.GOOGLE; model: GoogleModel }
   | { type: ProviderType.OLLAMA; model: OllamaModel };
 
-export const providerStore = atom<Provider>({ type: ProviderType.GOOGLE, model: { id: 'gemini-2.0-flash-thinking-exp-1219', displayName: 'Gemini Flash Thinking' } });
+export const providerStore = atom<Provider>({ type: ProviderType.GOOGLE, model: { id: 'gemini-3-flash', displayName: 'Gemini 3 Flash' } });
 
 export function setProvider(provider: Provider) {
   console.log('setProvider called with:', provider);
@@ -34,15 +34,14 @@ export function setProvider(provider: Provider) {
 
 
 export const anthropicModels: AnthropicModel[] = [
-  { id: 'claude-3-opus-20240229', displayName: 'Claude Opus Latest' },
-  { id: 'claude-3-5-sonnet-20241022', displayName: 'Claude Sonnet 3.5' },
-  { id: 'claude-3-5-haiku-20241022', displayName: 'Claude Haiku Latest' },
+  { id: 'claude-opus-4-6-20250205', displayName: 'Claude Opus 4.6' },
+  { id: 'claude-sonnet-4-5-20251120', displayName: 'Claude Sonnet 4.5' },
+  { id: 'claude-haiku-4-5-20251120', displayName: 'Claude Haiku 4.5' },
 ];
 
 export const googleModels: GoogleModel[] = [
-  { id: 'gemini-2.0-flash-exp', displayName: 'Gemini 2.0 Flash' },
-  { id: 'gemini-2.0-flash-thinking-exp-1219', displayName: 'Gemini 2.0 Flash Thinking' },
-  { id: 'gemini-2.5-flash-preview-04-17', displayName: 'Gemini 2.5 Preview'},
+  { id: 'gemini-3-pro', displayName: 'Gemini 3 Pro' },
+  { id: 'gemini-3-flash', displayName: 'Gemini 3 Flash' },
 ];
 
 

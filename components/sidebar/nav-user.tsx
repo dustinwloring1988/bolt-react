@@ -52,7 +52,7 @@ export function NavUser({
             >
               <Avatar className="h-9 w-9 rounded-lg border border-sidebar-primary/20">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg bg-sidebar-accent text-sidebar-primary">BN</AvatarFallback>
+                <AvatarFallback className="rounded-lg bg-sidebar-accent text-sidebar-primary">GU</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold font-body">{user.name}</span>

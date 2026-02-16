@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  :root {
+    /* Luxury Editorial Color Palette - Deep Navy & Gold */
+    --background: 222 30% 6%;
+    --foreground: 40 25% 94%;
+    
+    --card: 220 25% 8%;
+    --card-foreground: 40 25% 94%;
+    
+    --popover: 220 20% 10%;
+    --popover-foreground: 40 25% 94%;
+    
+    --primary: 38 70% 58%;
+    --primary-foreground: 222 30% 6%;
+    
+    --secondary: 220 15% 14%;
+    --secondary-foreground: 40 20% 90%;
+    
+    --muted: 220 10% 20%;
+    --muted-foreground: 220 10% 55%;
+    
+    --accent: 155 45% 42%;
+    --accent-foreground: 40 25% 94%;
+    
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 40 25% 94%;
+    
+    --border: 220 15% 20%;
+    --input: 220 15% 25%;
+    --ring: 38 70% 58%;
+    
+    --radius: 0.5rem;
+    
+    --sidebar-background: 220 25% 8%;
+    --sidebar-foreground: 40 20% 85%;
+    --sidebar-primary: 38 70% 58%;
+    --sidebar-primary-foreground: 222 30% 6%;
+    --sidebar-accent: 220 15% 12%;
+    --sidebar-accent-foreground: 40 20% 90%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 38 70% 58%;
+    
+    /* Layout constraints */
+    --header-height: 54px;
+    --chat-max-width: 32rem;
+    --chat-min-width: 545px;
+    --workbench-width: min(calc(100% - var(--chat-min-width)), 1536px);
+    --workbench-inner-width: var(--workbench-width);
+    --workbench-left: calc(100% - var(--workbench-width));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  
+  code, pre, .mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  /* Luxury Glass Effect - Refined */
+  .glass {
+    background: rgba(220, 225, 235, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(220, 225, 235, 0.08);
+  }
+  
+  .glass-hover {
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .glass-hover:hover {
+    background: rgba(220, 225, 235, 0.06);
+    border-color: rgba(220, 225, 235, 0.12);
+  }
+  
+  /* Elegant Card */
+  .luxury-card {
+    background: hsl(220 25% 8%);
+    border: 1px solid rgba(220, 225, 235, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Gold Accent Border */
+  .gold-border {
+    border-color: hsl(38 70% 58% / 0.3);
+  }
+  
+  .gold-border:focus-within {
+    border-color: hsl(38 70% 58%);
+    box-shadow: 0 0 0 3px hsl(38 70% 58% / 0.1);
+  }
+  
+  /* Typography Utilities */
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+  
+  .font-body {
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  /* Hide scrollbar */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Elegant Scrollbar */
+  .elegant-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .elegant-scrollbar::-webkit-scrollbar-track {
+    background: hsl(220 15% 8%);
+  }
+  
+  .elegant-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(220 15% 20%);
+    border-radius: 3px;
+  }
+  
+  .elegant-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(38 70% 58% / 0.5);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Gradient Text - Gold */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(38 70% 58%) 0%, hsl(40 60% 70%) 50%, hsl(38 70% 58%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Subtle Glow */
+  .glow-gold {
+    box-shadow: 0 0 40px hsl(38 70% 58% / 0.15);
+  }
+  
+  /* Hairline Border */
+  .hairline {
+    border: 1px solid rgba(220, 225, 235, 0.08);
+  }
+  
+  /* Selection Color */
+  ::selection {
+    background: hsl(38 70% 58% / 0.25);
+    color: hsl(40 25% 94%);
+  }
+}

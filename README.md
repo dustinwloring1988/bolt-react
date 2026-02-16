@@ -1,114 +1,57 @@
-# BoltNext - AI-Powered Full Stack Web App Generator
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript)
+[![AI SDK](https://img.shields.io/badge/AI%20SDK-v6-000000?style=flat)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
-BoltNext is a cutting-edge application that allows you to build full-stack web applications using the power of AI. By simply chatting with the AI.
+# nextjs-bolt
 
-This project is a Next.js-based reimagining of [bolt](https://github.com/stackblitz/bolt.new), which was originally built using Vite and Remix. BoltNext aims to provide a similar experience with the benefits of Next.js and tailwind, such as server-side rendering and improved performance.
+A Next.js 15 AI Chat Application powered by Vercel AI SDK with multi-provider support.
 
 ## Features
 
-*   **AI-Powered Code Generation:** Chat with the AI to describe your desired application, and BoltNext will generate the necessary code.
-*   **Mobile Responsive:** Allow use of bolt on various screen sizes.
-*   **Full-Stack Development:** Build complete web applications, including frontend and backend components.
-*   **Multiple AI Provider Support:** Choose from various AI providers like Anthropic, Google, and TogetherAI.
-*   **Interactive Chat Interface:** A user-friendly chat interface for interacting with the AI.
-*   **Customizable Sidebar:** A sidebar for navigation, model selection, and managing chat history.
-*   **Real-time Updates:** The application auto-updates as you make changes.
+- **Multi-Provider AI Support**: Google Gemini, Anthropic Claude, TogetherAI, xAI Grok, and Ollama
+- **Real-time Streaming**: Powered by Vercel AI SDK v6
+- **Code Execution**: Integrated WebContainer for sandboxed code running
+- **Rich Code Editor**: CodeMirror 6 with syntax highlighting for multiple languages
+- **Terminal**: xterm.js for interactive terminal output
+- **Modern UI**: Built with Radix UI components, Tailwind CSS, and Framer Motion
 
-## Screenshot
+## Providers
 
-![Application Screenshot](/public/screenshot.png)
+| Provider | Models |
+|----------|--------|
+| Google | gemini-2.0-flash-exp, gemini-2.0-flash-thinking-exp-1219, gemini-2.5-flash-preview-04-17 |
+| Anthropic | claude-3-opus, claude-3.5-sonnet, claude-3.5-haiku |
+| TogetherAI | Llama-3.2-90B-Vision, Llama-3.3-70B, Qwen2.5-Coder-32B |
+| xAI | grok-2-latest |
+| Ollama | gpt-oss, qwen3-coder, granite3.2-vision, qwen3-vl |
 
 ## Getting Started
 
-### Prerequisites
+```bash
+# Install dependencies
+npm install
 
-*   [Node.js](https://nodejs.org/) (v18 or higher)
-*   [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) or [pnpm](https://pnpm.io/) or [bun](https://bun.sh/)
+# Run development server
+npm run dev
+```
 
-### Installation
-
-1.  Clone the repository:
-
-    ```bash
-    git clone <repository_url>
-    ```
-2.  Navigate to the project directory:
-
-    ```bash
-    cd <project_directory>
-    ```
-3.  Install dependencies:
-
-    ```bash
-    npm install
-    # or
-    yarn install
-    # or
-    pnpm install
-    # or
-    bun install
-    ```
-
-### Running the Application
-
-1.  Start the development server:
-
-    ```bash
-    npm run dev
-    # or
-    yarn dev
-    # or
-    pnpm dev
-    # or
-    bun dev
-    ```
-2.  Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
-
-## Project Structure
-
-*   `app/`: Contains the main application logic, including pages and layouts.
-*   `components/`: Contains reusable UI components and some main application logic.
-*   `lib/`: Contains utility functions, stores, and other shared logic.
-*   `persistance/`: Contains database related logic.
-*   `public/`: Contains static assets like fonts and images.
-
-## Key Components
-
-*   **`app/layout.tsx`:** (startLine: 1, endLine: 49) The root layout of the application, including the sidebar and main content area.
-*   **`app/page.tsx`:** (startLine: 1, endLine: 21) The main page of the application, which includes the chat interface.
-*   **`components/sidebar/app-sidebar.tsx`:** (startLine: 1, endLine: 314) The main sidebar component, responsible for navigation and model selection.
-*   **`components/chat/BaseChat.tsx`:** The main chat interface component.
-*   **`components/chat/ProviderSelector.tsx`:** (startLine: 1, endLine: 80) Component for selecting the AI provider.
-*   **`components/sidebar/nav-main.tsx`:** (startLine: 1, endLine: 35) Component for rendering the main navigation items.
-*   **`components/sidebar/nav-projects.tsx`:** (startLine: 1, endLine: 26) Component for rendering the project navigation items.
-*   **`components/chat/ChatIntro.tsx`:** (startLine: 6, endLine: 65) Component for the intro screen.
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
 ## Environment Variables
 
-The application uses environment variables for configuration. Create a `.env.local` file in the root directory and add your environment variables.
+```env
+ANTHROPIC_API_KEY=your_anthropic_key
+TOGETHER_API_KEY=your_together_key
+```
 
-**Note:** The `.gitignore` file is configured to track `.env.example` and ignore all other `.env*` files.
+Ollama runs locally on `http://localhost:11434`.
 
-## To Do
+## Tech Stack
 
-*   **Error Auto-Fix:** Implement automatic error detection and correction in the generated code.
-*   **Version Control:** Enhance the GitHub integration to include version control features.
-*   **Deployment:** Add the deployment process with more options and better automation.
-*   **Supabase Integration:** Integrate Supabase for database management for both app and user and user authentication.
-*   **Auto-Scroll Fix:** Resolve issues with auto-scrolling in the chat interface.
-*   **Shell Bugs:** Address any bugs or inconsistencies in the shell/terminal component.
-*   **More:** Add more features and improvements based on user feedback and development goals.
-
-## Acknowledgements
-
-This project draws inspiration from and is a Next.js implementation of [bolt](https://github.com/stackblitz/bolt.new), originally developed using Vite and Remix. I also acknowledge and appreciate the contributions of [StackBlitz](https://stackblitz.com/), whose innovative platform has greatly influenced the development of this project.
-
-## Learn More
-
-*   [Next.js Documentation](https://nextjs.org/docs)
-*   [Learn Next.js](https://nextjs.org/learn)
-*   [Next.js GitHub Repository](https://github.com/vercel/next.js)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit pull requests or open issues.
+- **Framework**: Next.js 15.5.12 + React 19
+- **AI SDK**: Vercel AI SDK 6.0.86
+- **Styling**: Tailwind CSS + Radix UI
+- **State**: Zustand + Nanostores
+- **Editor**: CodeMirror 6

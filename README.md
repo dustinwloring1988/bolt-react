@@ -4,6 +4,8 @@
 [![AI SDK](https://img.shields.io/badge/AI%20SDK-v6-000000?style=flat)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
+<img width="1228" height="617" alt="cover" src="https://github.com/user-attachments/assets/826e9a95-579d-4b51-bfee-e77e5b80a8d5" />
+
 # nextjs-bolt
 
 A Next.js 15 AI Chat Application powered by Vercel AI SDK with multi-provider support.

@@ -202,3 +202,48 @@ const descriptionId = React.useId();
 **Status**: ESTABLISHED  
 **Confidence**: 0.90  
 **Applied**: 3 times in this session
+
+---
+
+## Session Learnings (2026-02-17) - Local Import Feature
+
+### Corrections Applied
+- [0.85] TypeScript/React: Unused state variables cause lint errors - always remove or prefix with `_` if intentionally unused
+
+### Successful Patterns
+- [0.90] Local folder import: Reuse existing GitHub import logic patterns (IGNORE_PATTERNS, clear workdir, npm install)
+- [0.85] WebContainer file import: Use `webkitRelativePath` to preserve folder structure when importing local directories
+- [0.80] Dialog component: Create separate dialog component instead of adding complexity to existing ImportDialog
+
+### Anti-Patterns Identified
+- None observed
+
+### Environment Details
+- WebContainer API for in-browser file system
+- JSZip available but not used (direct file API used instead)
+- `webkitdirectory` attribute for folder selection
+
+---
+
+## Pattern: Local Folder Import to WebContainer
+
+```typescript
+// CORRECT - use webkitRelativePath for folder structure
+const relativePath = file.webkitRelativePath || file.name;
+
+// Create directory structure before writing files
+const dirParts = relativePath.split('/');
+dirParts.pop(); // Remove filename
+if (dirParts.length > 0) {
+  let currentPath = '';
+  for (const dir of dirParts) {
+    currentPath += (currentPath ? '/' : '') + dir;
+    await wc.fs.mkdir(currentPath, { recursive: true });
+  }
+}
+await wc.fs.writeFile(relativePath, content);
+```
+
+**Status**: EMERGING  
+**Confidence**: 0.80  
+**Applied**: 1 time in this session

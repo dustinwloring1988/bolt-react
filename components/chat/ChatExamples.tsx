@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Github } from 'lucide-react';
+import { ArrowRight, Github, FolderOpen } from 'lucide-react';
 import { ImportDialog } from './ImportDialog';
+import { LocalImportDialog } from './LocalImportDialog';
 
 interface ExamplePrompt {
   text: string;
@@ -69,8 +70,23 @@ export function ImportFromGitHubButton({ onClick }: { onClick: () => void }) {
   );
 }
 
+export function ImportFromLocalButton({ onClick }: { onClick: () => void }) {
+  return (
+    <motion.button
+      variants={itemVariants}
+      onClick={onClick}
+      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/30 border border-border/30 
+                 hover:bg-secondary/50 hover:border-primary/30 transition-all duration-300 text-sm"
+    >
+      <FolderOpen className="w-4 h-4 text-primary/70" />
+      <span className="text-foreground/80">Import Local Folder</span>
+    </motion.button>
+  );
+}
+
 export const ChatExamples: React.FC<ChatExamplesProps> = ({ sendMessage }) => {
   const [importOpen, setImportOpen] = useState(false);
+  const [localImportOpen, setLocalImportOpen] = useState(false);
 
   const handleImportComplete = (prompt: string) => {
     sendMessage?.({} as React.UIEvent, prompt);
@@ -125,6 +141,12 @@ export const ChatExamples: React.FC<ChatExamplesProps> = ({ sendMessage }) => {
       <ImportDialog 
         open={importOpen} 
         onOpenChange={setImportOpen}
+        onImportComplete={handleImportComplete}
+      />
+
+      <LocalImportDialog 
+        open={localImportOpen} 
+        onOpenChange={setLocalImportOpen}
         onImportComplete={handleImportComplete}
       />
     </>

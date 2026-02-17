@@ -4,8 +4,9 @@ import { cn } from '@/lib/utils';
 import { Messages } from './Messages';
 import { ChatInput } from './ChatInput';
 import { ChatIntro } from './ChatIntro';
-import { ChatExamples, ImportFromGitHubButton } from './ChatExamples';
+import { ChatExamples, ImportFromGitHubButton, ImportFromLocalButton } from './ChatExamples';
 import { ImportDialog } from './ImportDialog';
+import { LocalImportDialog } from './LocalImportDialog';
 import { Workbench } from '@/components/workbench/Workbench';
 import ChatAlert from './ChatAlert';
 import { ActionAlert } from '@/types/actions';
@@ -58,6 +59,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
   ) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const [importOpen, setImportOpen] = useState(false);
+    const [localImportOpen, setLocalImportOpen] = useState(false);
 
     const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -127,8 +129,9 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                       isListening={isListening}
                     />
                     {chatStarted ? null : (
-                      <div className="flex justify-center mt-3">
+                      <div className="flex justify-center mt-3 gap-3">
                         <ImportFromGitHubButton onClick={() => setImportOpen(true)} />
+                        <ImportFromLocalButton onClick={() => setLocalImportOpen(true)} />
                       </div>
                     )}
                     <div ref={messagesEndRef}/>
@@ -147,6 +150,13 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
         <ImportDialog 
           open={importOpen} 
           onOpenChange={setImportOpen}
+          onImportComplete={(prompt) => {
+            sendMessage?.({} as React.UIEvent, prompt);
+          }}
+        />
+        <LocalImportDialog 
+          open={localImportOpen} 
+          onOpenChange={setLocalImportOpen}
           onImportComplete={(prompt) => {
             sendMessage?.({} as React.UIEvent, prompt);
           }}

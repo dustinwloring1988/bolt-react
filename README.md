@@ -6,7 +6,7 @@
 
 <img width="1465" height="782" alt="cover" src="https://github.com/user-attachments/assets/ede66567-288d-4a0d-8966-ab305a7fcfa1" />
 
-# nextjs-bolt
+# bolt-react
 
 A Next.js 15 AI Chat Application powered by Vercel AI SDK with multi-provider support.
 

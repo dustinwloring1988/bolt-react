@@ -23,7 +23,7 @@ export const Messages = React.forwardRef<HTMLDivElement, MessagesProps>((props: 
             const role = message.role;
             const messageWithContent = message as UIMessage & { content: string };
             const content = messageWithContent.content;
-            const data = 'data' in message ? (message as { data?: unknown }).data : undefined;
+            const data = 'data' in message ? (message as { data?: { url?: string; size?: number; name?: string; } | string | null }).data : undefined;
             const isUserMessage = role === 'user';
             const isFirst = index === 0;
             const isLast = index === messages.length - 1;

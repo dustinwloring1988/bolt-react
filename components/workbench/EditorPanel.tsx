@@ -26,6 +26,8 @@ import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 import { CaretDown, ClockCounterClockwise, FloppyDisk, Plus, Terminal as TerminalIcon, TerminalWindow, TreeStructure } from '@phosphor-icons/react';
 import { type TerminalRef } from './terminal/Terminal';
+import { downloadProjectAsZip } from '@/utils/download-project';
+import { ArrowLineDown } from '@phosphor-icons/react';
 
 interface EditorPanelProps {
   files?: FileMap;
@@ -144,9 +146,16 @@ export const EditorPanel = memo(
           <PanelGroup direction="horizontal">
             <Panel defaultSize={20} minSize={10} collapsible>
               <div className="flex flex-col border-r h-full">
-                <PanelHeader>
+<PanelHeader>
                   <TreeStructure/>
                   Files
+                  <button
+                    className="ml-auto p-1 hover:bg-white/10 rounded"
+                    onClick={() => files && downloadProjectAsZip(files, 'project')}
+                    title="Download as ZIP"
+                  >
+                    <ArrowLineDown />
+                  </button>
                 </PanelHeader>
                 <FileTree
                   className="h-full"

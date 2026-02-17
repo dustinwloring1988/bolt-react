@@ -26,11 +26,11 @@ function getEditorTheme(settings: EditorSettings) {
     },
     '&.cm-editor': {
       height: '100%',
-      backgroundColor: "#27212e", // editor.background
-      color: "#ffffff", // editor.foreground
+      backgroundColor: "hsl(220 25% 8%)",
+      color: "hsl(40 25% 94%)",
     },
     '.cm-cursor': {
-      borderLeft: '2px solid #b4dce7', // terminal.ansiCyan
+      borderLeft: '2px solid hsl(38 70% 58%)',
     },
     '.cm-scroller': {
       lineHeight: '1.5',
@@ -42,40 +42,40 @@ function getEditorTheme(settings: EditorSettings) {
       padding: '0 0 0 4px',
     },
     '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': {
-      backgroundColor: "#eb64b927 !important", // editor.selectionBackground
+      backgroundColor: "hsl(38 70% 58% / 0.2) !important",
       opacity: '1',
     },
     '&:not(.cm-focused) > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': {
-      backgroundColor: "#eb64b927", // editor.selectionBackground
+      backgroundColor: "hsl(38 70% 58% / 0.2)",
       opacity: '0.7',
     },
     '&.cm-focused > .cm-scroller .cm-matchingBracket': {
-      backgroundColor: "#eb64b927", // editor.wordHighlightBackground
+      backgroundColor: "hsl(38 70% 58% / 0.2)",
     },
     '.cm-activeLine': {
-      background: "#eb64b927", // editor.selectionBackground
+      background: "hsl(38 70% 58% / 0.08)",
     },
     '.cm-gutters': {
-      background: "#242029", // editorGroupHeader.tabsBackground
+      background: "hsl(220 25% 6%)",
       borderRight: 0,
-      color: "#ddd", // sideBar.foreground
+      color: "hsl(220 10% 55%)",
     },
     '.cm-gutter': {
       '&.cm-lineNumbers': {
-        fontFamily: 'Roboto Mono, monospace',
+        fontFamily: 'JetBrains Mono, monospace',
         fontSize: settings.gutterFontSize ?? settings.fontSize ?? '12px',
         minWidth: '40px',
       },
       '& .cm-activeLineGutter': {
         background: 'transparent',
-        color: "#74dfc4", // terminal.ansiGreen
+        color: "hsl(38 70% 58%)",
       },
       '&.cm-foldGutter .cm-gutterElement > .fold-icon': {
         cursor: 'pointer',
-        color: "#92889d", // gitDecoration.ignoredResourceForeground
+        color: "hsl(220 10% 55%)",
         transform: 'translateY(2px)',
         '&:hover': {
-          color: "#74dfc4", // terminal.ansiGreen
+          color: "hsl(38 70% 58%)",
         },
       },
     },
@@ -101,36 +101,36 @@ function getEditorTheme(settings: EditorSettings) {
       marginRight: '4px',
     },
     '.cm-panels': {
-      borderColor: "#964c7b", // input.border
+      borderColor: "hsl(38 70% 58% / 0.3)",
     },
     '.cm-panels-bottom': {
-      borderTop: `1px solid #964c7b`, // input.border
+      borderTop: `1px solid hsl(38 70% 58% / 0.3)`,
       backgroundColor: 'transparent',
     },
     '.cm-panel.cm-search': {
-      background: "#3a3242", // input.background
-      color: "#ffffff", // editor.foreground
+      background: "hsl(220 25% 10%)",
+      color: "hsl(40 25% 94%)",
       padding: '8px',
     },
     '.cm-search .cm-button': {
-        background: "#EB64B9", // button.background
-        borderColor: "#964c7b", // input.border
-        color: "#ffffff", // editor.foreground
+        background: "hsl(38 70% 58%)",
+        borderColor: "hsl(38 70% 58% / 0.3)",
+        color: "hsl(222 30% 6%)",
         borderRadius: '4px',
         '&:hover': {
-          color: "#ffffff", // editor.foreground
+          color: "hsl(222 30% 6%)",
         },
         '&:focus-visible': {
           outline: 'none',
-          borderColor: "#EB64B9", // focusBorder
+          borderColor: "hsl(38 70% 58%)",
         },
         '&:hover:not(:focus-visible)': {
-          background: "#EB64B9", // focusBorder
-          borderColor: "#EB64B9", // focusBorder
+          background: "hsl(38 70% 65%)",
+          borderColor: "hsl(38 70% 58%)",
         },
         '&:hover:focus-visible': {
-            background: "#EB64B9", // focusBorder
-            borderColor: "#EB64B9", // focusBorder
+            background: "hsl(38 70% 58%)",
+            borderColor: "hsl(38 70% 58%)",
         },
     },
     '.cm-panel.cm-search [name=close]': {
@@ -139,43 +139,43 @@ function getEditorTheme(settings: EditorSettings) {
       padding: '0 6px',
       fontSize: '1rem',
       backgroundColor: 'transparent',
-      color: "#ddd", // sideBar.foreground
+      color: "hsl(220 10% 55%)",
       '&:hover': {
         'border-radius': '6px',
-        color: "#EB64B9", // terminal.ansiRed
-        backgroundColor: "#3a3242", // input.background
+        color: "hsl(38 70% 58%)",
+        backgroundColor: "hsl(220 25% 10%)",
       },
     },
     '.cm-search input': {
-      background: "#3a3242", // input.background
-      borderColor: "#964c7b", // input.border
-      color: "#ffffff", // editor.foreground
+      background: "hsl(220 25% 12%)",
+      borderColor: "hsl(38 70% 58% / 0.3)",
+      color: "hsl(40 25% 94%)",
       outline: 'none',
       borderRadius: '4px',
       '&:focus-visible': {
-        borderColor: "#EB64B9", // focusBorder
+        borderColor: "hsl(38 70% 58%)",
       },
     },
     '.cm-tooltip': {
-      background: "#3e3549", // notifications.background
+      background: "hsl(220 25% 10%)",
       border: '1px solid transparent',
-      borderColor: "#964c7b", // input.border
-      color: "#ffffff", // editor.foreground
+      borderColor: "hsl(38 70% 58% / 0.3)",
+      color: "hsl(40 25% 94%)",
     },
     '.cm-tooltip.cm-tooltip-autocomplete ul li[aria-selected]': {
-      background: "#eb64b98f", // list.activeSelectionBackground
-      color: "#eee", // list.activeSelectionForeground
+      background: "hsl(38 70% 58% / 0.2)",
+      color: "hsl(40 25% 94%)",
     },
     '.cm-searchMatch': {
-      backgroundColor: "#40b4c48c", // editor.findMatchBackground
+      backgroundColor: "hsl(155 45% 42% / 0.3)",
     },
     '.cm-tooltip.cm-readonly-tooltip': {
       padding: '4px',
       whiteSpace: 'nowrap',
-      backgroundColor: "#3e3549", // notifications.background
-      borderColor: "#EB64B9", // focusBorder
+      backgroundColor: "hsl(220 25% 10%)",
+      borderColor: "hsl(38 70% 58%)",
       '& .cm-tooltip-arrow:before': {
-        borderTopColor: "#EB64B9", // focusBorder
+        borderTopColor: "hsl(38 70% 58%)",
       },
       '& .cm-tooltip-arrow:after': {
         borderTopColor: 'transparent',

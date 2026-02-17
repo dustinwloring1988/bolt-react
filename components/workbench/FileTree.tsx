@@ -167,9 +167,9 @@ function Folder({ folder: { depth, name }, collapsed, selected = false, onClick 
   return (
     <NodeButton
       className={cn('group', {
-        'bg-transparent text-muted hover:text-accent hover:bg-muted':
+        'bg-transparent text-sidebar-foreground/70 hover:text-sidebar-primary hover:bg-sidebar-accent/50':
           !selected,
-        'bg-secondary text-accent': selected,
+        'bg-sidebar-accent text-sidebar-primary': selected,
       })}
       depth={depth}
       onClick={onClick}
@@ -193,15 +193,15 @@ function File({ file: { depth, name }, onClick, selected, unsavedChanges = false
   return (
     <NodeButton
       className={cn('group', {
-        'bg-transparent hover:bg-muted text-muted hover:text-accent': !selected,
-        'bg-secondary text-accent': selected,
+        'bg-transparent hover:bg-sidebar-accent/50 text-sidebar-foreground/70 hover:text-sidebar-primary': !selected,
+        'bg-sidebar-accent text-sidebar-primary': selected,
       })}
       depth={depth}
       onClick={onClick}
     >
       <div
         className={cn('flex gap-1 items-center', {
-          'group-hover:text-accent': !selected,
+          'group-hover:text-sidebar-primary': !selected,
         })}
       >
         <FileIcon className='scale-98 ml-auto' />
@@ -223,7 +223,7 @@ function NodeButton({ depth, onClick, className, children }: ButtonProps) {
   return (
     <button
       className={cn(
-        'flex items-center gap-1.5 w-full pr-2 border-2 border-transparent text-faded py-0.5',
+        'flex items-center gap-1.5 w-full pr-2 border-2 border-transparent py-0.5 text-sm',
         className,
       )}
       style={{ paddingLeft: `${6 + depth * NODE_PADDING_LEFT}px` }}

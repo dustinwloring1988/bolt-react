@@ -2,30 +2,30 @@ import type { ITheme } from '@xterm/xterm';
 
 export function getTerminalTheme(overrides?: ITheme): ITheme {
   return {
-    cursor: '#b4dce7', // terminal.ansiCyan
-    cursorAccent: '#000',
-    foreground: '#ffffff', // editor.foreground
-    background: '#27212e', // editor.background
-    selectionBackground: 'rgba(235, 100, 185, 0.3)', // editor.selectionBackground with opacity
-    selectionForeground: '#ffffff', // editor.foreground
-    selectionInactiveBackground: 'rgba(235, 100, 185, 0.1)', // editor.selectionBackground with lower opacity
+    cursor: '#c9a55c', // Gold accent
+    cursorAccent: '#0a0e14',
+    foreground: '#f0ebe6', // Warm off-white
+    background: '#0a0e14', // Deep navy
+    selectionBackground: 'rgba(201, 165, 92, 0.25)', // Gold with opacity
+    selectionForeground: '#f0ebe6',
+    selectionInactiveBackground: 'rgba(201, 165, 92, 0.1)',
 
-    // ansi escape code colors
-    black: '#000000',
-    red: '#EB64B9', // terminal.ansiRed
-    green: '#74dfc4', // terminal.ansiGreen
-    yellow: '#ffe261', // terminal.ansiYellow
-    blue: '#40b4c4', // terminal.ansiBlue
-    magenta: '#b381c5', // terminal.ansiMagenta
-    cyan: '#b4dce7', // terminal.ansiCyan
-    white: '#ffffff',
-    brightBlack: '#808080',
-    brightRed: '#EB64B9', // terminal.ansiRed
-    brightGreen: '#74dfc4', // terminal.ansiGreen
-    brightYellow: '#ffe261', // terminal.ansiYellow
-    brightBlue: '#40b4c4', // terminal.ansiBlue
-    brightMagenta: '#b381c5', // terminal.ansiMagenta
-    brightCyan: '#b4dce7', // terminal.ansiCyan
+    // ansi escape code colors - refined for gold theme
+    black: '#0a0e14',
+    red: '#e57373', // Muted red
+    green: '#81c784', // Soft green
+    yellow: '#c9a55c', // Gold
+    blue: '#64b5f6', // Soft blue
+    magenta: '#ba68c8', // Soft purple
+    cyan: '#4dd0e1', // Soft cyan
+    white: '#f0ebe6',
+    brightBlack: '#546e7a',
+    brightRed: '#ef5350',
+    brightGreen: '#66bb6a',
+    brightYellow: '#ffd54f',
+    brightBlue: '#42a5f5',
+    brightMagenta: '#ab47bc',
+    brightCyan: '#26c6da',
     brightWhite: '#ffffff',
 
     ...overrides,

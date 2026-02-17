@@ -220,8 +220,8 @@ export const EditorPanel = memo(
                           className={cn(
                             'flex items-center gap-1.5 min-h-[var(--panel-header-height)] p-2',
                             {
-                              'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full bg-secondary text-accent': isActive,
-                              'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full bg-transparent text-muted hover:bg-accent':
+                              'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full bg-sidebar-accent text-sidebar-primary': isActive,
+                              'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full bg-transparent text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-primary':
                                 !isActive,
                             },
                           )}
@@ -237,8 +237,8 @@ export const EditorPanel = memo(
                             className={cn(
                               'flex items-center gap-1.5 min-h-[var(--panel-header-height)] p-2',
                               {
-                                'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full bg-secondary text-accent': isActive,
-                                'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full bg-transparent text-muted hover:bg-accent':
+                                'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full bg-sidebar-accent text-sidebar-primary': isActive,
+                                'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full bg-transparent text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-primary':
                                   !isActive,
                               },
                             )}
@@ -252,9 +252,9 @@ export const EditorPanel = memo(
                     </React.Fragment>
                   );
                 })}
-                {terminalCount < MAX_TERMINALS && <Plus className='cursor-pointer' onClick={addTerminal} />}
+                {terminalCount < MAX_TERMINALS && <Plus className='cursor-pointer text-sidebar-foreground/70 hover:text-sidebar-primary' onClick={addTerminal} />}
                 <CaretDown
-                  className="ml-auto cursor-pointer"
+                  className="ml-auto cursor-pointer text-sidebar-foreground/70 hover:text-sidebar-primary"
                   onClick={() => workbenchStore.toggleTerminal(false)}
                 />
               </div>

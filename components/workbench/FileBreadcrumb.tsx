@@ -87,14 +87,14 @@ export const FileBreadcrumb = memo<FileBreadcrumbProps>(({ files, pathSegments =
           <div key={index} className="relative flex items-center">
             <DropdownMenu.Root open={isActive} modal={false}>
               <DropdownMenu.Trigger asChild>
-              <span
+                <span
                   ref={(ref) => {
                     segmentRefs.current[index] = ref;
                   }}
                   onClick={() => handleSegmentClick(index)}
                   className={cn('flex items-center gap-1.5 cursor-pointer shrink-0', {
-                    'text-muted hover:text-accent': !isActive,
-                    'text-accent underline': isActive,
+                    'text-sidebar-foreground/80 hover:text-sidebar-primary': !isActive,
+                    'text-sidebar-primary underline': isActive,
                     'pr-4': isLast,
                   })}
                 >
@@ -102,7 +102,7 @@ export const FileBreadcrumb = memo<FileBreadcrumbProps>(({ files, pathSegments =
                   {segment}
                 </span>
               </DropdownMenu.Trigger>
-              {index > 0 && !isLast && <CaretRight className="text-muted inline-block mx-1" />}
+              {index > 0 && !isLast && <CaretRight className="text-sidebar-foreground/50 inline-block mx-1" />}
               <AnimatePresence>
                 {isActive && (
                   <DropdownMenu.Portal>
@@ -121,7 +121,7 @@ export const FileBreadcrumb = memo<FileBreadcrumbProps>(({ files, pathSegments =
                         variants={contextMenuVariants}
                       >
                         <div className="rounded-lg overflow-hidden">
-                          <div className="max-h-[50vh] min-w-[300px] overflow-scroll bg-white/5  backdrop-blur-sm border shadow-sm rounded-lg">
+                          <div className="max-h-[50vh] min-w-[300px] overflow-scroll bg-sidebar/95 backdrop-blur-sm border border-sidebar-border shadow-lg rounded-lg">
                             <FileTree
                               files={files}
                               hideRoot

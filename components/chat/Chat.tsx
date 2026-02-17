@@ -4,7 +4,10 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { memo, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import { cssTransition, ToastContainer } from 'react-toastify';
-import { useMessageParser, usePromptEnhancer, useShortcuts, useSnapScroll } from '@/hooks';
+import { useMessageParser } from '@/hooks/useMessageParser';
+import { usePromptEnhancer } from '@/hooks/usePromptEnhancer';
+import { useShortcuts } from '@/hooks/useShortcuts';
+import { useSnapScroll } from '@/hooks/useSnapScroll';
 import { useChatHistory } from '@/persistance';
 import { chatStore } from '@/lib/stores/chat';
 import { workbenchStore } from '@/lib/stores/workbench';
@@ -131,6 +134,8 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
   );
 
   const previousMessages = useRef<UIMessage[]>(initialMessages);
+  const storeMessageHistoryRef = useRef(storeMessageHistory);
+  storeMessageHistoryRef.current = storeMessageHistory;
 
   useEffect(() => {
     debouncedParseMessages(messages, isLoading);
@@ -139,7 +144,7 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
       messages.length > initialMessages.length &&
       JSON.stringify(messages) !== JSON.stringify(previousMessages.current)
     ) {
-      storeMessageHistory(messages).catch((error) =>
+      storeMessageHistoryRef.current(messages).catch((error) =>
         toast({
           variant: 'destructive',
           title: error.message,
@@ -147,7 +152,7 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
       );
       previousMessages.current = messages;
     }
-  }, [messages, isLoading, storeMessageHistory]);
+  }, [messages, isLoading, initialMessages]);
 
   const scrollTextArea = () => {
     const textarea = textareaRef.current;

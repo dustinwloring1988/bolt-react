@@ -84,7 +84,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
               className="flex flex-1 overflow-y-auto w-full h-full justify-center elegant-scrollbar"
             >
               <div className="flex flex-col flex-grow h-full w-full">
-                {!chatStarted && <ChatIntro />}
+                {chatStarted ? null : <ChatIntro />}
                 <div className={cn({ 'h-full flex flex-col': chatStarted })}>
                   {chatStarted ? (
                     <Messages
@@ -101,7 +101,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                     )}
                   >
                     <div className="mb-2">
-                      {actionAlert && (
+                      {actionAlert ? (
                         <ChatAlert
                           alert={actionAlert}
                           clearAlert={() => clearAlert?.()}
@@ -111,7 +111,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                             clearAlert?.();
                           }}
                         />
-                      )}
+                      ) : null}
                     </div>
                     <ChatInput
                       textareaRef={textareaRef}
@@ -126,7 +126,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                       onVoiceInput={onVoiceInput}
                       isListening={isListening}
                     />
-                    {!chatStarted && (
+                    {chatStarted ? null : (
                       <div className="flex justify-center mt-3">
                         <ImportFromGitHubButton onClick={() => setImportOpen(true)} />
                       </div>
@@ -134,7 +134,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                     <div ref={messagesEndRef}/>
                   </div>
                 </div>
-                {!chatStarted && (
+                {chatStarted ? null : (
                   <ChatExamples sendMessage={sendMessage} />
                 )}
               </div>

@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import {
   BadgeCheck,
   Bell,
@@ -29,6 +30,15 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Sparkle } from "@phosphor-icons/react"
+import { useStore } from "@nanostores/react"
+import {
+  settingsModalStore,
+  openSettingsModal,
+} from "@/lib/stores/settings-modal"
+import {
+  notificationsModalStore,
+  openNotificationsModal,
+} from "@/lib/stores/notifications-modal"
 
 export function NavUser({
   user,
@@ -40,11 +50,20 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const settingsOpen = useStore(settingsModalStore).isOpen
+  const notificationsOpen = useStore(notificationsModalStore).isOpen
+
+  useEffect(() => {
+    if (settingsOpen || notificationsOpen) {
+      setDropdownOpen(false)
+    }
+  }, [settingsOpen, notificationsOpen])
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
+        <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -81,22 +100,34 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="hover:bg-sidebar-accent">
+              <DropdownMenuItem
+                className="hover:bg-sidebar-accent cursor-pointer"
+                onSelect={() => openSettingsModal('limits')}
+              >
                 <Sparkle className="mr-2 h-4 w-4 text-sidebar-primary" />
                 Upgrade to Pro
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem className="hover:bg-sidebar-accent">
+              <DropdownMenuItem
+                className="hover:bg-sidebar-accent cursor-pointer"
+                onSelect={() => openSettingsModal('general')}
+              >
                 <BadgeCheck className="mr-2 h-4 w-4" />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-sidebar-accent">
+              <DropdownMenuItem
+                className="hover:bg-sidebar-accent cursor-pointer"
+                onSelect={() => openSettingsModal('billing')}
+              >
                 <CreditCard className="mr-2 h-4 w-4" />
                 Billing
               </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-sidebar-accent">
+              <DropdownMenuItem
+                className="hover:bg-sidebar-accent cursor-pointer"
+                onSelect={() => openNotificationsModal()}
+              >
                 <Bell className="mr-2 h-4 w-4" />
                 Notifications
               </DropdownMenuItem>

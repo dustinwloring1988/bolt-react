@@ -34,6 +34,7 @@ import { binDates } from "./date-binning"
 import { openSettingsModal } from "@/lib/stores/settings-modal"
 import { GithubLogo } from "@phosphor-icons/react/dist/ssr"
 import { SettingsModal } from "@/components/settings/SettingsModal"
+import { NotificationsModal } from "@/components/notifications/NotificationsModal"
 
 type DialogContent = { type: 'delete'; item: ChatHistoryItem } | null;
 
@@ -208,13 +209,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         title: "Support",
-        url: "https://github.com/Dustinwloring1988/bolt-react/issues",
+        url: "https://github.com/dustinwloring1988/bolt-react/issues/new",
         target: "_blank",
         icon: LifeBuoy,
       },
       {
         title: "Feedback",
-        url: "https://github.com/Dustinwloring1988/bolt-react/issues",
+        url: "https://github.com/dustinwloring1988/bolt-react/issues/new",
         target: "_blank",
         icon: Send,
       },
@@ -224,6 +225,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar variant="inset" {...props}>
       <SettingsModal />
+      <NotificationsModal />
       <SidebarHeader className="border-b border-sidebar-border/50 pb-6 pt-6">
         <SidebarMenu>
           <SidebarMenuItem>

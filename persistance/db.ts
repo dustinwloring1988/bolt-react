@@ -1,4 +1,5 @@
 import type { UIMessage } from 'ai';
+import { toast } from 'react-toastify';
 import { createScopedLogger } from '@/utils/logger';
 import type { ChatHistoryItem } from './useChatHistory';
 
@@ -6,10 +7,18 @@ const logger = createScopedLogger('ChatHistory');
 
 let dbInstance: IDBDatabase | undefined;
 
+let dbOpenPromise: Promise<IDBDatabase | undefined> | undefined;
+const DB_NAME = 'boltnextHistory';
+const DB_VERSION = 2;
+
 // this is used at the top level and never rejects
 export async function openDatabase(): Promise<IDBDatabase | undefined> {
-  return new Promise((resolve) => {
-    const request = indexedDB.open('boltnextHistory', 1);
+  if (dbOpenPromise) {
+    return dbOpenPromise;
+  }
+
+  dbOpenPromise = new Promise((resolve) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
 
     request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
       const db = (event.target as IDBOpenDBRequest).result;
@@ -22,21 +31,38 @@ export async function openDatabase(): Promise<IDBDatabase | undefined> {
     };
 
     request.onsuccess = (event: Event) => {
-      resolve((event.target as IDBOpenDBRequest).result);
+      const db = (event.target as IDBOpenDBRequest).result;
+      dbInstance = db;
+      resolve(db);
     };
 
     request.onerror = (event: Event) => {
+      const error = (event.target as IDBOpenDBRequest).error;
+      
+      if (error?.name === 'VersionError') {
+        logger.warn('Database version mismatch, deleting old database');
+        dbOpenPromise = undefined;
+        dbInstance = undefined;
+        indexedDB.deleteDatabase(DB_NAME);
+        toast.error('Chat history was cleared due to a version mismatch. Please refresh the page.');
+        resolve(undefined);
+        return;
+      }
+      
+      dbOpenPromise = undefined;
       resolve(undefined);
-      logger.error((event.target as IDBOpenDBRequest).error);
+      logger.error(error);
     };
   });
+  return dbOpenPromise;
 }
 
 export async function getDb(): Promise<IDBDatabase | undefined> {
   if (dbInstance) {
     return dbInstance;
   }
-  return await openDatabase();
+  dbInstance = await openDatabase();
+  return dbInstance;
 }
 
 export async function getAll(db: IDBDatabase): Promise<ChatHistoryItem[]> {

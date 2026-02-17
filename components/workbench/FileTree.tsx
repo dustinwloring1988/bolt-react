@@ -2,7 +2,8 @@ import { memo, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { FileMap } from '@/lib/stores/files';
 import { cn } from '@/lib/utils';
 import { createScopedLogger, renderLogger } from '@/utils/logger';
-import { CaretDown, CaretRight, Circle, File as FileIcon } from '@phosphor-icons/react';
+import { CaretDown, CaretRight, Circle, File as FileIcon, LockSimple, LockSimpleOpen } from '@phosphor-icons/react';
+import type { FileLocks } from '@/lib/stores/fileLocks';
 
 const logger = createScopedLogger('FileTree');
 
@@ -13,12 +14,14 @@ interface Props {
   files?: FileMap;
   selectedFile?: string;
   onFileSelect?: (filePath: string) => void;
+  onFileLockToggle?: (filePath: string) => void;
   rootFolder?: string;
   hideRoot?: boolean;
   collapsed?: boolean;
   allowFolderSelection?: boolean;
   hiddenFiles?: Array<string | RegExp>;
   unsavedFiles?: Set<string>;
+  lockedFiles?: FileLocks;
   className?: string;
 }
 
@@ -26,6 +29,7 @@ export const FileTree = memo(
   ({
     files = {},
     onFileSelect,
+    onFileLockToggle,
     selectedFile,
     rootFolder,
     hideRoot = false,
@@ -34,6 +38,7 @@ export const FileTree = memo(
     hiddenFiles,
     className,
     unsavedFiles,
+    lockedFiles,
   }: Props) => {
     renderLogger.trace('FileTree');
 
@@ -42,6 +47,10 @@ export const FileTree = memo(
     const fileList = useMemo(() => {
       return buildFileList(files, rootFolder, hideRoot, computedHiddenFiles);
     }, [files, rootFolder, hideRoot, computedHiddenFiles]);
+
+    const isFileLocked = (filePath: string) => {
+      return lockedFiles?.[filePath]?.status === 'locked';
+    };
 
     const [collapsedFolders, setCollapsedFolders] = useState(() => {
       return collapsed
@@ -123,8 +132,12 @@ export const FileTree = memo(
                   selected={selectedFile === fileOrFolder.fullPath}
                   file={fileOrFolder}
                   unsavedChanges={unsavedFiles?.has(fileOrFolder.fullPath)}
+                  isLocked={isFileLocked(fileOrFolder.fullPath)}
                   onClick={() => {
                     onFileSelect?.(fileOrFolder.fullPath);
+                  }}
+                  onLockToggle={() => {
+                    onFileLockToggle?.(fileOrFolder.fullPath);
                   }}
                 />
               );
@@ -186,10 +199,12 @@ interface FileProps {
   file: FileNode;
   selected: boolean;
   unsavedChanges?: boolean;
+  isLocked?: boolean;
   onClick: () => void;
+  onLockToggle?: () => void;
 }
 
-function File({ file: { depth, name }, onClick, selected, unsavedChanges = false }: FileProps) {
+function File({ file: { depth, name }, onClick, onLockToggle, selected, unsavedChanges = false, isLocked = false }: FileProps) {
   return (
     <NodeButton
       className={cn('group', {
@@ -207,6 +222,29 @@ function File({ file: { depth, name }, onClick, selected, unsavedChanges = false
         <FileIcon className='scale-98 ml-auto' />
         <div className="flex-1 truncate pr-2">{name}</div>
         {unsavedChanges && <Circle weight="fill" className='shrink-0 text-orange-500' />}
+        {onLockToggle && (
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={(e) => {
+              e.stopPropagation();
+              onLockToggle();
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.stopPropagation();
+                onLockToggle();
+              }
+            }}
+            className={cn(
+              'shrink-0 p-0.5 rounded hover:bg-sidebar-accent transition-colors cursor-pointer',
+              isLocked ? 'text-orange-500' : 'text-sidebar-foreground/50 hover:text-sidebar-foreground'
+            )}
+            title={isLocked ? 'Unlock file' : 'Lock file'}
+          >
+            {isLocked ? <LockSimple weight="fill" className="scale-90" /> : <LockSimpleOpen className="scale-90" />}
+          </span>
+        )}
       </div>
     </NodeButton>
   );

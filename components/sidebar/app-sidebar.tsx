@@ -42,6 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [open, setOpen] = useState(true);
   const [dialogContent, setDialogContent] = useState<DialogContent>(null);
   const { showChat } = useStore(chatStore);
+  const currentChatId = useStore(chatId);
   const closeDialog = () => {
     setDialogContent(null);
   };
@@ -79,7 +80,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     if (open) {
       loadEntries();
     }
-  }, [open]);
+  }, [open, currentChatId]);
 
    
   useEffect(() => {

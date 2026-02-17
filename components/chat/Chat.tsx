@@ -11,6 +11,7 @@ import { useSnapScroll } from '@/hooks/useSnapScroll';
 import { useChatHistory } from '@/persistance';
 import { chatStore } from '@/lib/stores/chat';
 import { workbenchStore } from '@/lib/stores/workbench';
+import { fileLocksStore } from '@/lib/stores/fileLocks';
 import { fileModificationsToHTML } from '@/utils/diff';
 import { providerStore } from '@/lib/stores/provider';
 import { createScopedLogger, renderLogger } from '@/utils/logger';
@@ -228,6 +229,11 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
     await workbenchStore.saveAllFiles();
 
     const fileModifications = workbenchStore.getFileModifcations();
+    const lockedFiles = fileLocksStore.getLockedFilePaths();
+
+    const lockedFilesInfo = lockedFiles.length > 0 
+      ? `\n\n<locked_files>\nThe following files are locked by the user and CANNOT be modified:\n${lockedFiles.map(f => `- ${f}`).join('\n')}\nDO NOT attempt to modify these files.\n</locked_files>\n`
+      : '';
 
     chatStore.setKey('aborted', false);
 
@@ -244,7 +250,7 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
        * aren't relevant here.
        */
       handleSend({
-        text: `${diff}\n\n${_input}`,
+        text: `${diff}${lockedFilesInfo}\n\n${_input}`,
       });
 
       /**
@@ -253,7 +259,7 @@ export const ChatImpl = memo(({ initialMessages, storeMessageHistory }: ChatProp
        */
       workbenchStore.resetAllFileModifications();
     } else {
-      handleSend({ text: _input });
+      handleSend({ text: `${lockedFilesInfo}${_input}` });
     }
 
     setInput('');

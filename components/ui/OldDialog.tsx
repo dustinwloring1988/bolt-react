@@ -106,6 +106,7 @@ interface DialogProps {
 }
 
 export const Dialog = memo(({ className, children, onBackdrop, onClose }: DialogProps) => {
+  const descriptionId = React.useId();
   return (
     <RadixDialog.Portal>
       <RadixDialog.Overlay onClick={onBackdrop} asChild>
@@ -117,7 +118,7 @@ export const Dialog = memo(({ className, children, onBackdrop, onClose }: Dialog
           variants={dialogBackdropVariants}
         />
       </RadixDialog.Overlay>
-      <RadixDialog.Content asChild>
+      <RadixDialog.Content asChild aria-describedby={descriptionId}>
         <motion.div
           className={cn(
             'fixed top-[50%] left-[50%] z-50 max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] border rounded-lg bg-background shadow-lg focus:outline-none overflow-hidden',
@@ -129,6 +130,9 @@ export const Dialog = memo(({ className, children, onBackdrop, onClose }: Dialog
           variants={dialogVariants}
         >
           {children}
+          <RadixDialog.Description id={descriptionId} className="sr-only">
+            Dialog description
+          </RadixDialog.Description>
           <RadixDialog.Close asChild onClick={onClose}>
             <X className="absolute top-[10px] right-[10px]" />
           </RadixDialog.Close>

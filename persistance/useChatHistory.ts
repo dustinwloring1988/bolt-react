@@ -90,29 +90,31 @@ export function useChatHistory(mixedId?: string) {
       }
 
       const { firstArtifact } = workbenchStore;
+      let currentUrlId = urlId;
 
-      if (!urlId && firstArtifact?.id) {
-        const urlId = await getUrlId(db, firstArtifact.id);
+      if (!currentUrlId && firstArtifact?.id) {
+        currentUrlId = await getUrlId(db, firstArtifact.id);
 
-        navigateChat(urlId);
-        setUrlId(urlId);
+        navigateChat(currentUrlId);
+        setUrlId(currentUrlId);
       }
 
       if (!description.get() && firstArtifact?.title) {
         description.set(firstArtifact?.title);
       }
 
-      if (initialMessages.length === 0 && !chatId.get()) {
-        const nextId = await getNextId(db);
+      let currentChatId = chatId.get();
+      if (initialMessages.length === 0 && !currentChatId) {
+        currentChatId = await getNextId(db);
 
-        chatId.set(nextId);
+        chatId.set(currentChatId);
 
-        if (!urlId) {
-          navigateChat(nextId);
+        if (!currentUrlId) {
+          navigateChat(currentChatId);
         }
       }
 
-      await setMessages(db, chatId.get() as string, messages, urlId, description.get());
+      await setMessages(db, currentChatId as string, messages, currentUrlId, description.get());
     },
   };
 }

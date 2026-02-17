@@ -88,3 +88,117 @@ prepareSendMessagesRequest: ({ messages, trigger, messageId }) => {
 - CodeMirror 6 for code editor
 - xterm.js for terminal emulation
 - Phosphor Icons for iconography
+
+---
+
+## Session Learnings (2026-02-17)
+
+### Corrections Applied
+- [0.90] IndexedDB: Cache both the promise AND the database instance to prevent race conditions
+- [0.85] IndexedDB: When database version changes, handle VersionError by clearing old database
+- [0.80] React: When using state in async callbacks, use local variables instead of state (setState is async)
+- [0.75] Dialog accessibility: Radix DialogContent requires DialogTitle for screen readers
+- [0.75] Dialog accessibility: Radix DialogContent needs aria-describedby or DialogDescription
+
+### Successful Patterns
+- [0.90] File locking: Use nanostores map for state management with localStorage persistence
+- [0.85] File locking: Check locks in action-runner BEFORE writing files
+- [0.80] History refresh: Subscribe to chatId atom to trigger reload when new chat is created
+
+### Anti-Patterns Identified
+- [0.90] Avoid: Nested button elements - use span with role="button" instead
+- [0.85] Avoid: Using React state immediately after setState call (race condition)
+- [0.80] Avoid: Opening IndexedDB without caching the promise (causes multiple simultaneous opens)
+
+### Environment Details
+- IndexedDB for chat persistence
+- Radix UI for dialogs
+- localStorage for file lock persistence
+
+---
+
+## Pattern: IndexedDB Database Caching
+
+```typescript
+// CORRECT - cache both promise and instance
+let dbOpenPromise: Promise<IDBDatabase | undefined> | undefined;
+let dbInstance: IDBDatabase | undefined;
+
+export async function openDatabase(): Promise<IDBDatabase | undefined> {
+  if (dbOpenPromise) {
+    return dbOpenPromise;
+  }
+
+  dbOpenPromise = new Promise((resolve) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onsuccess = (event) => {
+      dbInstance = (event.target as IDBOpenDBRequest).result;
+      resolve(dbInstance);
+    };
+    request.onerror = () => {
+      dbOpenPromise = undefined;
+      resolve(undefined);
+    };
+  });
+  return dbOpenPromise;
+}
+```
+
+**Status**: ESTABLISHED  
+**Confidence**: 0.90  
+**Applied**: 1 time in this session
+
+---
+
+## Pattern: React State in Async Callbacks
+
+```typescript
+// CORRECT - use local variables
+storeMessageHistory: async (messages: UIMessage[]) => {
+  let currentUrlId = urlId; // copy state to local var
+  
+  if (!currentUrlId && firstArtifact?.id) {
+    currentUrlId = await getUrlId(db, firstArtifact.id); // update local var
+    setUrlId(currentUrlId); // update state for UI
+  }
+  
+  await setMessages(db, currentChatId, messages, currentUrlId, ...); // use local var
+}
+
+// WRONG - using state immediately after setState
+if (!urlId && firstArtifact?.id) {
+  const newUrlId = await getUrlId(...);
+  setUrlId(newUrlId);
+  await setMessages(db, ..., urlId, ...); // urlId still has OLD value!
+}
+```
+
+**Status**: ESTABLISHED  
+**Confidence**: 0.85  
+**Applied**: 1 time in this session
+
+---
+
+## Pattern: Dialog Accessibility
+
+```typescript
+// CORRECT - add hidden title and description
+import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+<DialogContent>
+  <DialogTitle className="sr-only">Command Menu</DialogTitle>
+  {children}
+</DialogContent>
+
+// OR use auto-generated IDs
+const descriptionId = React.useId();
+<DialogPrimitive.Content aria-describedby={descriptionId}>
+  <DialogDescription id={descriptionId} className="sr-only">
+    Dialog description
+  </DialogDescription>
+</DialogPrimitive.Content>
+```
+
+**Status**: ESTABLISHED  
+**Confidence**: 0.90  
+**Applied**: 3 times in this session

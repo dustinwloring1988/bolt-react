@@ -12,7 +12,7 @@ A Next.js 15 AI Chat Application powered by Vercel AI SDK with multi-provider su
 
 ## Features
 
-- **Multi-Provider AI Support**: Google Gemini, Anthropic Claude, TogetherAI, xAI Grok, and Ollama
+- **Multi-Provider AI Support**: Google Gemini, Anthropic Claude and Ollama
 - **Real-time Streaming**: Powered by Vercel AI SDK v6
 - **Code Execution**: Integrated WebContainer for sandboxed code running
 - **Rich Code Editor**: CodeMirror 6 with syntax highlighting for multiple languages
@@ -43,7 +43,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser.
 
 ```env
 ANTHROPIC_API_KEY=your_anthropic_key
-TOGETHER_API_KEY=your_together_key
 ```
 
 Ollama runs locally on `http://localhost:11434`.

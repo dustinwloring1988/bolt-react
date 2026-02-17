@@ -17,12 +17,6 @@ This file documents the AI agents and their configurations for this project.
 ### Anthropic
 - Models: `claude-3-opus-20240229`, `claude-3.5-sonnet-20241022`, `claude-3.5-haiku-20241022`
 
-### TogetherAI
-- Models: `meta-llama/Llama-3.2-90B-Vision-Instruct-Turbo`, `meta-llama/Llama-3.3-70B-Instruct-Turbo`, `meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo`, `meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo`, `Qwen/Qwen2.5-Coder-32B-Instruct`, `Qwen/QwQ-32B-Preview`
-
-### xAI
-- Models: `grok-2-latest`
-
 ### Ollama (Community Provider)
 - Package: `ollama-ai-provider-v2`
 - Models: `gpt-oss:120b`, `gpt-oss:latest`, `qwen3-coder:latest`, `granite3.2-vision:latest`, `qwen3-vl:4b`, `qwen3-vl:latest`
@@ -31,7 +25,6 @@ This file documents the AI agents and their configurations for this project.
 
 ### Environment Variables
 - `ANTHROPIC_API_KEY` - For Anthropic models
-- `TOGETHER_API_KEY` - For TogetherAI models
 - Ollama runs locally on `http://localhost:11434`
 
 ### Adding New Providers

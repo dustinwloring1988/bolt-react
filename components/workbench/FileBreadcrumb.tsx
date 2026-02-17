@@ -2,6 +2,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import { memo, useEffect, useRef, useState } from 'react';
 import type { FileMap } from '@/lib/stores/files';
+import type { FileLocks } from '@/lib/stores/fileLocks';
 import { cn } from '@/lib/utils';
 import { WORK_DIR } from '@/utils/constants';
 import { cubicEasingFn } from '@/utils/easings';
@@ -15,6 +16,8 @@ interface FileBreadcrumbProps {
   files?: FileMap;
   pathSegments?: string[];
   onFileSelect?: (filePath: string) => void;
+  lockedFiles?: FileLocks;
+  onFileLockToggle?: (filePath: string) => void;
 }
 
 const contextMenuVariants = {
@@ -36,7 +39,7 @@ const contextMenuVariants = {
   },
 } satisfies Variants;
 
-export const FileBreadcrumb = memo<FileBreadcrumbProps>(({ files, pathSegments = [], onFileSelect }) => {
+export const FileBreadcrumb = memo<FileBreadcrumbProps>(({ files, pathSegments = [], onFileSelect, lockedFiles, onFileLockToggle }) => {
   renderLogger.trace('FileBreadcrumb');
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -128,11 +131,13 @@ export const FileBreadcrumb = memo<FileBreadcrumbProps>(({ files, pathSegments =
                               rootFolder={path}
                               collapsed
                               allowFolderSelection
+                              lockedFiles={lockedFiles}
                               selectedFile={`${path}/${segment}`}
                               onFileSelect={(filePath) => {
                                 setActiveIndex(null);
                                 onFileSelect?.(filePath);
                               }}
+                              onFileLockToggle={onFileLockToggle}
                             />
                           </div>
                         </div>

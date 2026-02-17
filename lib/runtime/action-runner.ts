@@ -5,9 +5,17 @@ import { createScopedLogger } from '@/utils/logger';
 import { unreachable } from '@/utils/unreachable';
 import type { ActionCallbackData } from './message-parser';
 import type { BoltNextShell } from '@/utils/shell';
+import { fileLocksStore } from '@/lib/stores/fileLocks';
 import path from 'path';
 
 const logger = createScopedLogger('ActionRunner');
+
+class FileLockedError extends Error {
+  constructor(filePath: string) {
+    super(`File is locked: ${filePath}`);
+    this.name = 'FileLockedError';
+  }
+}
 
 export type ActionStatus = 'pending' | 'running' | 'complete' | 'aborted' | 'failed';
 
@@ -189,21 +197,33 @@ export class ActionRunner {
         if (action.abortSignal.aborted) {
           return;
         }
-  
+
+        if (error instanceof FileLockedError) {
+          this.#updateAction(actionId, { status: 'failed', error: 'File is locked' });
+          logger.warn(`[${action.type}]:File is locked\n\n`, error);
+          this.onAlert?.({
+            type: 'error',
+            title: 'File Locked',
+            description: `The file "${error.message.replace('File is locked: ', '')}" is locked by the user. Unlock it to allow AI modifications.`,
+            content: 'Please unlock the file in the file tree to allow modifications.',
+          });
+          return;
+        }
+   
         this.#updateAction(actionId, { status: 'failed', error: 'Action failed' });
         logger.error(`[${action.type}]:Action failed\n\n`, error);
-  
+   
         if (!(error instanceof ActionCommandError)) {
           return;
         }
-  
+   
         this.onAlert?.({
           type: 'error',
           title: 'Dev Server Failed',
           description: error.header,
           content: error.output,
         });
-  
+   
         // re-throw the error to be caught in the promise chain
         throw error;
       }
@@ -250,6 +270,11 @@ export class ActionRunner {
   async #runFileAction(action: ActionState) {
     if (action.type !== 'file') {
       unreachable('Expected file action');
+    }
+
+    if (fileLocksStore.isLocked(action.filePath)) {
+      logger.warn(`File is locked, skipping write: ${action.filePath}`);
+      throw new FileLockedError(action.filePath);
     }
 
     const webcontainer = await this.#webcontainer;

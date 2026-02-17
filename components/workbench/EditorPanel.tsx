@@ -13,6 +13,7 @@ import { PanelHeader } from '@/components/ui/PanelHeader';
 import { PanelHeaderButton } from '@/components/ui/PanelHeaderButton';
 import { shortcutEventEmitter } from '@/hooks/useShortcuts';
 import type { FileMap } from '@/lib/stores/files';
+import { fileLocksStore } from '@/lib/stores/fileLocks';
 import { themeStore } from '@/lib/stores/theme';
 import { workbenchStore } from '@/lib/stores/workbench';
 import { WORK_DIR } from '@/utils/constants';
@@ -70,6 +71,11 @@ export const EditorPanel = memo(
 
     const theme = useStore(themeStore);
     const showTerminal = useStore(workbenchStore.showTerminal);
+    const lockedFiles = useStore(fileLocksStore.locks);
+
+    const handleFileLockToggle = (filePath: string) => {
+      fileLocksStore.toggleLock(filePath);
+    };
 
     const terminalRefs = useRef<Array<TerminalRef | null>>([]);
     const terminalPanelRef = useRef<ImperativePanelHandle>(null);
@@ -147,18 +153,20 @@ export const EditorPanel = memo(
                   files={files}
                   hideRoot
                   unsavedFiles={unsavedFiles}
+                  lockedFiles={lockedFiles}
                   rootFolder={WORK_DIR}
                   selectedFile={selectedFile}
                   onFileSelect={onFileSelect}
+                  onFileLockToggle={handleFileLockToggle}
                 />
               </div>
             </Panel>
             <PanelResizeHandle />
             <Panel className="flex flex-col" defaultSize={80} minSize={20}>
               <PanelHeader className="overflow-x-auto">
-                {activeFileSegments?.length && (
-                  <div className="flex items-center flex-1 text-sm">
-                    <FileBreadcrumb pathSegments={activeFileSegments} files={files} onFileSelect={onFileSelect} />
+                    {activeFileSegments?.length && (
+                    <div className="flex items-center flex-1 text-sm">
+                      <FileBreadcrumb pathSegments={activeFileSegments} files={files} onFileSelect={onFileSelect} lockedFiles={lockedFiles} onFileLockToggle={handleFileLockToggle} />
                     {activeFileUnsaved && (
                       <div className="flex gap-1 ml-auto -mr-1.5">
                         <PanelHeaderButton onClick={onFileSave}>

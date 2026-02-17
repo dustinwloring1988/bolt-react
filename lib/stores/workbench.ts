@@ -11,6 +11,7 @@ import { EditorStore } from './editor';
 import { FilesStore, type FileMap } from './files';
 import { PreviewsStore } from './previews';
 import { TerminalStore } from './terminal';
+import type { GitHubRepoInfo } from '@/types/github';
 import type { ActionAlert } from '@/types/actions';
 import { createSampler } from '@/utils/sampler';
 import { WebContainer } from '@webcontainer/api';
@@ -45,6 +46,7 @@ export class WorkbenchStore {
   actionAlert: WritableAtom<ActionAlert | undefined> = atom<ActionAlert | undefined>(this.getInitialActionAlert());
   webcontainer: Promise<WebContainer>;
   reloadedMessages = new Set<string>();
+  importedRepo: WritableAtom<GitHubRepoInfo | null> = atom<GitHubRepoInfo | null>(null);
 
   artifacts: Artifacts = map({});
   showWorkbench: WritableAtom<boolean> = atom(false);
@@ -148,6 +150,13 @@ export class WorkbenchStore {
 
   setShowWorkbench(show: boolean) {
     this.showWorkbench.set(show);
+  }
+
+  setImportedRepo(repo: GitHubRepoInfo | null) {
+    this.importedRepo.set(repo);
+    if (repo) {
+      this.showWorkbench.set(true);
+    }
   }
 
   setCurrentDocumentContent(newContent: string) {

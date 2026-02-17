@@ -75,3 +75,21 @@ Pattern: "AI SDK v6 useChat uses transport architecture"
   Corrected: 0 times
   Confidence: 0.95
   Status: EMERGING
+
+---
+
+### 4. GitHub Repository Import Feature
+
+### Corrections Applied
+- [0.90] Icon library: `@phosphor-icons/react` doesn't have `FolderGit2` - use `lucide-react` icons instead
+- [0.95] WebContainer: Paths are already relative to workdir - do NOT prepend WORK_DIR to file paths
+- [0.85] WebContainer: Use `wc.fs.readdir('.')` not `wc.fs.readdir('/')` to list workdir contents
+- [0.80] WebContainer: Use project's `webcontainer` singleton from `@/lib/webcontainer` instead of importing directly
+
+### Successful Patterns
+- [0.85] GitHub API: Use raw.githubusercontent.com for file downloads, api.github.com for repo metadata
+- [0.80] File filtering: Ignore node_modules, .git, build artifacts with pattern matching
+
+### Anti-Patterns Identified
+- [0.95] Avoid: Prepending WORK_DIR to WebContainer paths (causes /home/project/home/project/... paths)
+- [0.85] Avoid: Using dynamic imports `@webcontainer/api` in client code - use existing singleton

@@ -4,7 +4,7 @@
 [![AI SDK](https://img.shields.io/badge/AI%20SDK-v6-000000?style=flat)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
-<img width="1228" height="617" alt="cover" src="https://github.com/user-attachments/assets/826e9a95-579d-4b51-bfee-e77e5b80a8d5" />
+<img width="1465" height="782" alt="cover" src="https://github.com/user-attachments/assets/ede66567-288d-4a0d-8966-ab305a7fcfa1" />
 
 # nextjs-bolt
 

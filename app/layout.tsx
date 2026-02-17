@@ -7,7 +7,7 @@ import { Toaster } from '@/components/ui/toaster'
 import BeautifulBackground from './background'
 
 export const metadata = {
-  title: 'BoltNext',
+  title: 'BoltLocal',
   description: 'Generate full stack apps using AI',
   icons: {
     icon: '/faviconround.ico',

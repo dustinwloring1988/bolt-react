@@ -16,13 +16,25 @@ interface MessagesProps {
 export const Messages = React.forwardRef<HTMLDivElement, MessagesProps>((props: MessagesProps, ref) => {
   const { id, isStreaming = false, messages = [] } = props;
 
+  const getMessageContent = (message: UIMessage): string => {
+    if ('content' in message && typeof message.content === 'string') {
+      return message.content;
+    }
+    if ('parts' in message && Array.isArray(message.parts)) {
+      return message.parts
+        .filter((part): part is { type: 'text'; text: string } => part.type === 'text')
+        .map(part => part.text)
+        .join('');
+    }
+    return '';
+  };
+
   return (
     <div id={id} ref={ref} className={props.className}>
       {messages.length > 0
         ? messages.map((message, index) => {
             const role = message.role;
-            const messageWithContent = message as UIMessage & { content: string };
-            const content = messageWithContent.content;
+            const content = getMessageContent(message);
             const data = 'data' in message ? (message as { data?: { url?: string; size?: number; name?: string; } | string | null }).data : undefined;
             const isUserMessage = role === 'user';
             const isFirst = index === 0;

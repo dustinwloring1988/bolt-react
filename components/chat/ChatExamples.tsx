@@ -55,6 +55,20 @@ const itemVariants = {
   }
 };
 
+export function ImportFromGitHubButton({ onClick }: { onClick: () => void }) {
+  return (
+    <motion.button
+      variants={itemVariants}
+      onClick={onClick}
+      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/30 border border-border/30 
+                 hover:bg-secondary/50 hover:border-primary/30 transition-all duration-300 text-sm"
+    >
+      <Github className="w-4 h-4 text-primary/70" />
+      <span className="text-foreground/80">Import from GitHub</span>
+    </motion.button>
+  );
+}
+
 export const ChatExamples: React.FC<ChatExamplesProps> = ({ sendMessage }) => {
   const [importOpen, setImportOpen] = useState(false);
 
@@ -65,7 +79,7 @@ export const ChatExamples: React.FC<ChatExamplesProps> = ({ sendMessage }) => {
   return (
     <>
       <motion.div 
-        className="w-full max-w-4xl mx-auto mt-16 px-6"
+        className="w-full max-w-4xl mx-auto mt-4 px-6"
         id="examples"
         variants={containerVariants}
         initial="hidden"
@@ -82,29 +96,6 @@ export const ChatExamples: React.FC<ChatExamplesProps> = ({ sendMessage }) => {
         </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <motion.button
-            variants={itemVariants}
-            onClick={() => setImportOpen(true)}
-            className="group text-left p-5 rounded-xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 
-                       hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="relative">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] uppercase tracking-wider text-primary/70 font-medium">
-                  Import
-                </span>
-                <Github className="w-4 h-4 text-primary/40 group-hover:text-primary/70 group-hover:translate-x-1 transition-all duration-300" />
-              </div>
-              <h3 className="font-display text-lg text-foreground/90 mb-2 group-hover:text-foreground transition-colors">
-                Import from GitHub
-              </h3>
-              <p className="text-sm text-muted-foreground/70 leading-relaxed">
-                Clone an existing repository to continue building
-              </p>
-            </div>
-          </motion.button>
-
           {EXAMPLE_PROMPTS.map((examplePrompt, index) => (
           <motion.button
             key={index}

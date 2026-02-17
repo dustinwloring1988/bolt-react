@@ -1,10 +1,11 @@
 "use client"
-import React, { type RefCallback, useEffect, useRef } from 'react';
+import React, { type RefCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Messages } from './Messages';
 import { ChatInput } from './ChatInput';
 import { ChatIntro } from './ChatIntro';
-import { ChatExamples } from './ChatExamples';
+import { ChatExamples, ImportFromGitHubButton } from './ChatExamples';
+import { ImportDialog } from './ImportDialog';
 import { Workbench } from '@/components/workbench/Workbench';
 import ChatAlert from './ChatAlert';
 import { ActionAlert } from '@/types/actions';
@@ -56,6 +57,7 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
     ref,
   ) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const [importOpen, setImportOpen] = useState(false);
 
     const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -124,6 +126,11 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
                       onVoiceInput={onVoiceInput}
                       isListening={isListening}
                     />
+                    {!chatStarted && (
+                      <div className="flex justify-center mt-3">
+                        <ImportFromGitHubButton onClick={() => setImportOpen(true)} />
+                      </div>
+                    )}
                     <div ref={messagesEndRef}/>
                   </div>
                 </div>
@@ -137,6 +144,13 @@ export const BaseChat = React.forwardRef<HTMLDivElement, BaseChatProps>(
             'w-full flex-grow': !showChat,
           })} />
         </div>
+        <ImportDialog 
+          open={importOpen} 
+          onOpenChange={setImportOpen}
+          onImportComplete={(prompt) => {
+            sendMessage?.({} as React.UIEvent, prompt);
+          }}
+        />
       </div>
     );
   },
